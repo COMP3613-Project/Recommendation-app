@@ -1,5 +1,5 @@
 from App.database import db
-from App.models import User
+
 
 class Staff(User):
     staffID = db.Column(db.Integer, db.ForeignKey('user.id'))
@@ -24,4 +24,3 @@ class Staff(User):
             'userType': self.userType,
             'notificationFeed': [notif.toJSON() for notif in self.notificationFeed]
         }
-        

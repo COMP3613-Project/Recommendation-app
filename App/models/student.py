@@ -1,5 +1,5 @@
 from App.database import db
-from App.models import User
+
 
 class Student(User):
     studentID = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
