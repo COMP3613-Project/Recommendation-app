@@ -5,7 +5,7 @@ class Staff(User):
     staffID = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
     # staff has a list of notification objects
     notificationFeed = db.relationship('Notification', backref=db.backref('staff', lazy='joined'))
-    #commit test
+
     def toJSON(self):
         return {
             'staffID': self.staffID,
