@@ -2,25 +2,25 @@ from App.database import db
 from App.models import User
 
 class Staff(User):
-    staffID = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
+    staffID = db.Column(db.Integer, db.ForeignKey('user.id'))
     # staff has a list of notification objects
     notificationFeed = db.relationship('Notification', backref=db.backref('staff', lazy='joined'))
-
+    
     def toJSON(self):
         return {
             'staffID': self.staffID,
             'email': self.email,
-            'userType': self.userType,
             'firstName': self.firstName,
-            'lastName': self.lastName
+            'lastName': self.lastName,
+            'userType': self.userType
         }
     
-    def toJSON_with_notifications(self):
+    def toJSON_notifs(self):
         return {
             'staffID': self.staffID,
             'email': self.email,
-            'userType': self.userType,
             'firstName': self.firstName,
             'lastName': self.lastName,
+            'userType': self.userType,
             'notificationFeed': [notif.toJSON() for notif in self.notificationFeed]
         }
