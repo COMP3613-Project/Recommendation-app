@@ -24,3 +24,4 @@ class Staff(User):
             'userType': self.userType,
             'notificationFeed': [notif.toJSON() for notif in self.notificationFeed]
         }
+        
