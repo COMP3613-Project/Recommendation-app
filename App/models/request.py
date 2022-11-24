@@ -1,4 +1,5 @@
 from App.database import db
+from datetime import datetime
 
 #written by KARISHMA JAMES 
 Class Request(db.model):
@@ -17,7 +18,7 @@ def _init_(self,studentID, staffID,title,requestText,date):
 		self.staffID=staffID
 		self.title=title
 		self.requestText=requestText
-		self.date=date
+		self.set_date(date)
 
 def toJSON(self):
     return{
@@ -39,4 +40,9 @@ def toJSON_Request(self):
 		'requestText':self.requestText,
 		'date': self.date,
 		request:[request.toJSON() for Request in self.request]
+
+def set_date(self, date):
+	#set current date and time
+	date_time = datetime.date_time()
+	self.date = date_time.strftime("%d/%m/%Y %H:%M")
 
