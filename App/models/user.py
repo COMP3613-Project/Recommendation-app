@@ -18,11 +18,11 @@ class User(db.Model):
 
     def toJSON(self):
         return{
-            'id': self.id,
-            'email': self.email,
+            'id'       : self.id,
+            'email'    : self.email,
             'firstName': self.firstName,
-            'lastName': self.lastName,
-            'userType': self.userType
+            'lastName' : self.lastName,
+            'userType ': self.userType
         }
 
     def set_password(self, password):
@@ -33,3 +33,4 @@ class User(db.Model):
         """Check hashed password."""
         return check_password_hash(self.password, password)
 
+#written by KARISHMA JAMES 
