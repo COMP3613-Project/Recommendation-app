@@ -4,10 +4,10 @@ Class Request(model)
 
 	requestID= db.Column(db.Integer, primaryKey= True)
 	studentID= db.Column(db.Integer, db.ForeignKey('student.studentID'), primary_key = True)
-staffID= db.Column(db.String, db.ForeignKey('staff.staffId'),primary_key= True)
+	staffID= db.Column(db.String, db.ForeignKey('staff.staffId'),primary_key= True)
 	title= db.Column(db.String, nullable= False)
 	requestText= db.Column(db.String, nullable= False)
-      date= db.Column(db.String, nullable =False)
+    date= db.Column(db.String, nullable =False)
 	request= db.relationship('Request', backref= db.backref('Request', lazy='joined')
 
 
