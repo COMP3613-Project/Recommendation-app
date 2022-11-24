@@ -3,7 +3,7 @@ class Recommendation(db.Model):
     recomID = db.Column(db.Integer, primary_key=True)
     staffID = db.Column(db.Integer, db.ForeignKey('staff.staffID'))
     studentID = db.Column(db.Integer, db.ForeignKey('student.studentID'))
-    staffName= db.Column(db.String, db.'staff.staffName'))
+    staffName= db.Column(db.String, db.('staff.staffName'))
     recomText= db.Column(db.String, nullable=False)
     date= db.Column(db.String,nuallable=False)
     recomList= db.relationship('recomList',backref=db.backref(Recommendation, lazy='joined'))
