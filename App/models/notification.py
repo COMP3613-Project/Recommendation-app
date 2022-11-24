@@ -2,7 +2,7 @@ from App.database import db
 
 class Notification(db.Model):
     notifID = db.Column(db.Integer, primary_key=True)
-    requestID= db.Column(db.Integer,db.ForeignKey('request.requestID))
+    requestID= db.Column(db.Integer,db.ForeignKey('request.requestID'))
     staffID = db.Column(db.Integer, db.ForeignKey('staff.staffID'))
     requestTitle = db.Column(db.String, nullable=False)
     date = db.Column(db.String, nullable=False)
@@ -21,17 +21,17 @@ def __init__(self, requestID staffID, requestTitle,date):
             'notifID'     : self.notifID,
             'requestID'   : self.requestID,
             'staffID'     : self.staffID,
-            'requestTitle': requestTitle,
-            'date'        : date
+            'requestTitle': self.requestTitle,
+            'date'        : self.date
         
         }
     def toJSON_Notification(self):
         return{
             'notifID'     : self.notifID,
-            'requestID'   : requestID,
+            'requestID'   : self.requestID,
             'staffID'     : self.staffID,
-            'requestTitle': requestTitle,
-            'date'        : date,
+            'requestTitle': self.requestTitle,
+            'date'        : self.date,
             notificationFeed= [notification.toJSON() for notification in self.notificationFeed]
         }
         #written by KARISHMA JAMES
