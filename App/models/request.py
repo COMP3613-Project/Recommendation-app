@@ -1,7 +1,7 @@
 from App.database import db
 
 #written by KARISHMA JAMES 
-Class Request(db.model)
+Class Request(db.model):
 
 	requestID= db.Column(db.Integer, primaryKey= True)
 	studentID= db.Column(db.Integer, db.ForeignKey('student.studentID'), primary_key = True)
@@ -19,7 +19,7 @@ def _init_(self,studentID, staffID,title,requestText,date):
 		self.requestText=requestText
 		self.date=date
 
-def toJSON(self)
+def toJSON(self):
     return{
 		'requestID':self.requestID,
 		'studentID':self.studentID,
@@ -30,7 +30,7 @@ def toJSON(self)
 		'request'  : [req.toJson() for Request in self.request]
 }
 
-def toJSON_Request(self)
+def toJSON_Request(self):
     return{
 		'requestID':self.requestID,
 		'studentID':self.studentID,

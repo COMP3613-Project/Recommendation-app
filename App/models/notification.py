@@ -9,7 +9,7 @@ class Notification(db.Model):
     notification=db.relationship('Notification', backref= db.backref(staff,lazy='joined'))
     
     
-def __init__(self, requestID staffID, requestTitle,date)
+def __init__(self, requestID staffID, requestTitle,date):
         self.requestID=requestID
         self.staffID=staffID
         self.requestTitle=requestTitle
