@@ -31,10 +31,11 @@ def toJSON(self)
 
 def toJSON_Request(self)
     return{
-		'requestID':self.requestID
-		'studentID':self.studentID
-  		'staffID': self.staffID
- 		'title':self.title
-		'requestText':self.requestText
-		'date': self.date
+		'requestID':self.requestID,
+		'studentID':self.studentID,
+  		'staffID': self.staffID,
+ 		'title':self.title,
+		'requestText':self.requestText,
+		'date': self.date,
+		request:[req.toJSON() for Request in self.request]
 
