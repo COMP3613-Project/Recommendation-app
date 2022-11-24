@@ -8,19 +8,20 @@ class Staff(User):
     
     def toJSON(self):
         return {
-            'staffID': self.staffID,
-            'email': self.email,
+            'staffID'  : self.staffID,
+            'email'    : self.email,
             'firstName': self.firstName,
-            'lastName': self.lastName,
-            'userType': self.userType
+            'lastName' : self.lastName,
+            'userType' : self.userType
         }
     
     def toJSON_notifs(self):
         return {
-            'staffID': self.staffID,
-            'email': self.email,
+            'staffID'  : self.staffID,
+            'email'    : self.email,
             'firstName': self.firstName,
-            'lastName': self.lastName,
-            'userType': self.userType,
+            'lastName' : self.lastName,
+            'userType' : self.userType,
             'notificationFeed': [notif.toJSON() for notif in self.notificationFeed]
         }
+#written by KARISHMA JAMES
