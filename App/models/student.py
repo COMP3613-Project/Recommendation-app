@@ -2,7 +2,7 @@ from App.database import db
 
 
 class Student(User):
-    studentID = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
+    studentID = db.Column(db.Integer, db.ForeignKey('user.id'))
     # student has a list of recommendation objects
     recomList = db.relationship('Recommendation', backref=db.backref('student', lazy='joined'))
     
