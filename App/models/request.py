@@ -1,6 +1,7 @@
 from App.database import db
 
-Class Request(model)
+#written by KARISHMA JAMES 
+Class Request(db.model)
 
 	requestID= db.Column(db.Integer, primaryKey= True)
 	studentID= db.Column(db.Integer, db.ForeignKey('student.studentID'), primary_key = True)
@@ -11,7 +12,7 @@ Class Request(model)
 	request= db.relationship('Request', backref= db.backref('Request', lazy='joined')
 
 
-def_init_(self,studentID, staffID,title,requestText,date):
+def _init_(self,studentID, staffID,title,requestText,date):
 		self.studentID=studentID
 		self.staffID=staffID
 		self.title=title
@@ -22,11 +23,11 @@ def toJSON(self)
     return{
 		'requestID':self.requestID,
 		'studentID':self.studentID,
-  		'staffID': self.staffID,
- 		'title':self.title,
+  		'staffID'  : self.staffID,
+ 		'title'    :self.title,
 		'requestText':self.requestText,
-		'date': self.date,
-		'request': [req.toJson() for Request in self.request]
+		'date'     : self.date,
+		'request'  : [req.toJson() for Request in self.request]
 }
 
 def toJSON_Request(self)
@@ -37,5 +38,5 @@ def toJSON_Request(self)
  		'title':self.title,
 		'requestText':self.requestText,
 		'date': self.date,
-		request:[req.toJSON() for Request in self.request]
+		request:[request.toJSON() for Request in self.request]
 
