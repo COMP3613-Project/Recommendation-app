@@ -18,19 +18,20 @@ def __init__(self, requestID staffID, requestTitle,date)
         
     def toJSON(self):
         return{
-            'notifID': self.notifID,
-            'requestID': self.requestID,
-            'staffID': self.staffID,
+            'notifID'     : self.notifID,
+            'requestID'   : self.requestID,
+            'staffID'     : self.staffID,
             'requestTitle': requestTitle,
-            'date': date
+            'date'        : date
         
         }
     def toJSON_Notification(self):
         return{
-            'notifID': self.notifID,
-            'requestID': requestID,
-            'staffID': self.staffID,
+            'notifID'     : self.notifID,
+            'requestID'   : requestID,
+            'staffID'     : self.staffID,
             'requestTitle': requestTitle,
-            'date': date,
+            'date'        : date,
             notificationFeed= [notification.toJSON() for notification in self.notificationFeed]
         }
+        #written by KARISHMA JAMES
