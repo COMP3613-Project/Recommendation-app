@@ -9,19 +9,20 @@ class Student(User):
     def toJSON(self):
         return{
             'studentID': self.studentID,
-            'email': self.email,
+            'email'    : self.email,
             'firstName': self.firstName,
-            'lastName': self.lastName,
-            'userType': self.userType,
+            'lastName' : self.lastName,
+            'userType' : self.userType
         }
         
     def toJSON_Recoms(self):
         return{
             
-            'studentID': self.studentID,
-            'email': self.email,
-            'firstName': self.firstName,
-            'lastName': self.lastName,
-            'userType': self.userType
+            'studentID' : self.studentID,
+            'email'     : self.email,
+            'firstName' : self.firstName,
+            'lastName'  : self.lastName,
+            'userType'  : self.userType,
             'recommendationList': [recommendation.toJSON() for recommendation in self.recomList]
         }
+        #written by KARISHMA JAMES
