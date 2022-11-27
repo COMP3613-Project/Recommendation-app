@@ -13,15 +13,15 @@ class Request(db.model):
     
 	notification=db.relationship('Notification', backref= db.backref(staff,lazy='joined'))
 	
-def _init_(self,studentID, staffID,title,requestText,date):
+	def _init_(self,studentID, staffID,title,requestText,date):
 		self.studentID=studentID
 		self.staffID=staffID
 		self.title=title
 		self.requestText=requestText
 		self.set_date(date)
 
-def toJSON(self):
-    return{
+	def toJSON(self):
+    	return{
 		'requestID':self.requestID,
 		'studentID':self.studentID,
   		'staffID'  : self.staffID,
@@ -32,8 +32,8 @@ def toJSON(self):
 }
 
 
-def set_date(self, date):
+	def set_date(self, date):
 	#set current date and time
-	date_time = datetime.date_time()
-	self.date = date_time.strftime("%d/%m/%Y %H:%M")
+		date_time = datetime.date_time()
+		self.date = date_time.strftime("%d/%m/%Y %H:%M")
 
