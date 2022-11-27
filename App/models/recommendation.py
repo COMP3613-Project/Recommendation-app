@@ -1,4 +1,5 @@
 from App.database import db
+from datetime import datetime
 
 class Recommendation(db.Model):
     recomID = db.Column(db.Integer, primary_key=True)
@@ -12,7 +13,7 @@ class Recommendation(db.Model):
         self.staffID=staffID
         self.studentID= studentID
         self.recomText= recomText
-        self.date=date
+        self.set_date(date)
     
     def toJSON(self):
         return{
@@ -24,6 +25,9 @@ class Recommendation(db.Model):
             'date'     : self.date
             
         }
-
+    def set_date(self, date):
+	#set current date and time
+	    date_time = datetime.date_time()
+	    self.date = date_time.strftime("%d/%m/%Y %H:%M")
     #written by KARISHMA JAMES
     
