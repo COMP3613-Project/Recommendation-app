@@ -9,7 +9,7 @@ class Notification(db.Model):
     date = db.Column(db.String, nullable=False)
     
     
-def __init__(self, requestID staffID, requestTitle,date):
+    def __init__(self, requestID, staffID, requestTitle,date):
         self.requestID=requestID
         self.staffID=staffID
         self.requestTitle=requestTitle
