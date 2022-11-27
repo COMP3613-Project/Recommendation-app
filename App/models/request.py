@@ -4,7 +4,7 @@ from datetime import datetime
 #written by KARISHMA JAMES 
 class Request(db.Model):
 
-	requestID= db.Column(db.Integer, primaryKey= True)
+	requestID= db.Column(db.Integer, primary_Key= True)
 	studentID= db.Column(db.Integer, db.ForeignKey('student.studentID'))
 	staffID= db.Column(db.String, db.ForeignKey('staff.staffId'))
 	title= db.Column(db.String, nullable= False)
