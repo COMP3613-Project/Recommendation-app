@@ -3,7 +3,7 @@ from App.models import User
 
 
 class Staff(User):
-    staffID = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
+    staffID = db.Column(db.Integer, db.ForeignKey('user.ID'), primary_key=True)
     # staff has a list of notification objects
     notificationFeed = db.relationship('Notification', backref=db.backref('staff', lazy='joined'))
     requestList= db.relationship('Request', backref= db.backref('Request', lazy='joined'))
