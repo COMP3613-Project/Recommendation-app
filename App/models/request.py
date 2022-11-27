@@ -10,9 +10,8 @@ Class Request(db.model):
 	title= db.Column(db.String, nullable= False)
 	requestText= db.Column(db.String, nullable= False)
     date= db.Column(db.String, nullable =False)
-	request= db.relationship('Request', backref= db.backref('Request', lazy='joined'))
-
-
+	notification=db.relationship('Notification', backref= db.backref(staff,lazy='joined'))
+	
 def _init_(self,studentID, staffID,title,requestText,date):
 		self.studentID=studentID
 		self.staffID=staffID
@@ -31,15 +30,6 @@ def toJSON(self):
 		'request'  : [req.toJson() for Request in self.request]
 }
 
-def toJSON_Request(self):
-    return{
-		'requestID':self.requestID,
-		'studentID':self.studentID,
-  		'staffID': self.staffID,
- 		'title':self.title,
-		'requestText':self.requestText,
-		'date': self.date,
-		request:[request.toJSON() for Request in self.request]
 
 def set_date(self, date):
 	#set current date and time

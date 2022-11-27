@@ -6,7 +6,6 @@ class Notification(db.Model):
     staffID = db.Column(db.Integer, db.ForeignKey('staff.staffID'))
     requestTitle = db.Column(db.String, nullable=False)
     date = db.Column(db.String, nullable=False)
-    notification=db.relationship('Notification', backref= db.backref(staff,lazy='joined'))
     
     
 def __init__(self, requestID staffID, requestTitle,date):
@@ -25,13 +24,5 @@ def __init__(self, requestID staffID, requestTitle,date):
             'date'        : self.date
         
         }
-    def toJSON_Notification(self):
-        return{
-            'notifID'     : self.notifID,
-            'requestID'   : self.requestID,
-            'staffID'     : self.staffID,
-            'requestTitle': self.requestTitle,
-            'date'        : self.date,
-            notificationFeed= [notification.toJSON() for notification in self.notificationFeed]
-        }
+    
         #written by KARISHMA JAMES
