@@ -6,7 +6,7 @@ class Recommendation(db.Model):
     staffID = db.Column(db.Integer, db.ForeignKey('staff.staffID'))
     studentID = db.Column(db.Integer, db.ForeignKey('student.studentID'))
     recomText= db.Column(db.String, nullable=False)
-    date= db.Column(db.String,nuallable=False)
+    date= db.Column(db.String, nullable=False)
     
 
     def __init__(self,staffID, studentID, recomText,date ):
