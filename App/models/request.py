@@ -9,7 +9,7 @@ class Request(db.model):
 	staffID= db.Column(db.String, db.ForeignKey('staff.staffId'))
 	title= db.Column(db.String, nullable= False)
 	requestText= db.Column(db.String, nullable= False)
-    date= db.Column(db.String, nullable =False)
+     date= db.Column(db.String, nullable =False)
 	notification=db.relationship('Notification', backref= db.backref(staff,lazy='joined'))
 	
 def _init_(self,studentID, staffID,title,requestText,date):
