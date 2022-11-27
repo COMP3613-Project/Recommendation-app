@@ -9,7 +9,7 @@ class Recommendation(db.Model):
     date= db.Column(db.String, nullable=False)
     
 
-    def __init__(self,staffID, studentID, recomText,date ):
+    def __init__(self,staffID, studentID, recomText, date ):
         self.staffID=staffID
         self.studentID= studentID
         self.recomText= recomText
