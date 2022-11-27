@@ -1,4 +1,5 @@
 from App.database import db
+from datetime import datetime
 
 class Notification(db.Model):
     notifID = db.Column(db.Integer, primary_key=True)
@@ -12,7 +13,7 @@ def __init__(self, requestID staffID, requestTitle,date):
         self.requestID=requestID
         self.staffID=staffID
         self.requestTitle=requestTitle
-        self.date=date
+        self.set_date(date)
         
         
     def toJSON(self):
@@ -24,5 +25,8 @@ def __init__(self, requestID staffID, requestTitle,date):
             'date'        : self.date
         
         }
-    
+    def set_date(self, date):
+	#set current date and time
+	    date_time = datetime.date_time()
+	    self.date = date_time.strftime("%d/%m/%Y %H:%M")
         #written by KARISHMA JAMES
