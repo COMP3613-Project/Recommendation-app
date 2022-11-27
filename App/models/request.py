@@ -2,7 +2,7 @@ from App.database import db
 from datetime import datetime
 
 #written by KARISHMA JAMES 
-class Request(db.model):
+class Request(db.Model):
 
 	requestID= db.Column(db.Integer, primaryKey= True)
 	studentID= db.Column(db.Integer, db.ForeignKey('student.studentID'))
