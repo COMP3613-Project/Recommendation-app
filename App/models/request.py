@@ -21,15 +21,15 @@ class Request(db.model):
 		self.set_date(date)
 
 	def toJSON(self):
-    	return{
-		'requestID':self.requestID,
-		'studentID':self.studentID,
-  		'staffID'  : self.staffID,
- 		'title'    :self.title,
-		'requestText':self.requestText,
-		'date'     : self.date,
-		'request'  : [req.toJson() for Request in self.request]
-}
+    		return{
+				'requestID':self.requestID,
+				'studentID':self.studentID,
+  				'staffID'  : self.staffID,
+ 				'title'    :self.title,
+				'requestText':self.requestText,
+				'date'     : self.date,
+				'request'  : [req.toJson() for Request in self.request]
+			}
 
 
 	def set_date(self, date):
