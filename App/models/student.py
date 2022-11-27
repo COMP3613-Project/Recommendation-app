@@ -3,7 +3,7 @@ from App.models import User
 
 
 class Student(User):
-    studentID = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
+    studentID = db.Column(db.Integer, db.ForeignKey('user.ID'), primary_key=True)
     # student has a list of recommendation objects
     recomList = db.relationship('Recommendation', backref=db.backref('student', lazy='joined'))
     
