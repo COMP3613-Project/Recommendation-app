@@ -5,7 +5,7 @@ class Recommendation(db.Model):
     recomID = db.Column(db.Integer, primary_key=True)
     staffID = db.Column(db.Integer, db.ForeignKey('staff.staffID'))
     studentID = db.Column(db.Integer, db.ForeignKey('student.studentID'))
-    requestID = db.Colum(db.Integer, db.ForeignKey('request.requestID'))
+    requestID = db.Column(db.Integer, db.ForeignKey('request.requestID'))
     recomText= db.Column(db.String, nullable=False)
     date= db.Column(db.String, nullable=False)
     
