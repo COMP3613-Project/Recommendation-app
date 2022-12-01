@@ -7,33 +7,36 @@ class Request(db.Model):
 	requestID= db.Column(db.Integer, primary_key= True)
 	studentID= db.Column(db.Integer, db.ForeignKey('student.studentID'))
 	staffID= db.Column(db.String, db.ForeignKey('staff.staffID'))
-	title= db.Column(db.String, nullable= False)
+	#title= db.Column(db.String, nullable= False)
 	requestText= db.Column(db.String, nullable= False)
 	date= db.Column(db.String, nullable= False)
+	status = db.Column(db.String, nullable = False)
     
-	notification=db.relationship('Notification', backref= db.backref('staff',lazy='joined'))
+	notification=db.relationship('Notification', backref= db.backref('request',lazy='joined'))
 	
-	def _init_(self,studentID, staffID,title,requestText,date):
-		self.studentID=studentID
-		self.staffID=staffID
-		self.title=title
-		self.requestText=requestText
-		self.set_date(date)
+	def __init__(self, staffID, studentID, requestText ):
+			self.staffID=staffID
+			self.studentID= studentID
+			self.requestText= requestText
+			self.set_date()
+			self.status= "pending"
+	
 
 	def toJSON(self):
     		return{
 				'requestID':self.requestID,
-				'studentID':self.studentID,
   				'staffID'  : self.staffID,
- 				'title'    :self.title,
+				'studentID':self.studentID,
+ 				#'title'    :self.title,
 				'requestText':self.requestText,
 				'date'     : self.date,
-				'request'  : [req.toJson() for Request in self.request]
+				'status'   : self.status,
+				#'request'  : [req.toJson() for Request in self.request]
 			}
 
 
-	def set_date(self, date):
+	def set_date(self):
 	#set current date and time
-		date_time = datetime.date_time()
+		date_time = datetime.now()
 		self.date = date_time.strftime("%d/%m/%Y %H:%M")
 

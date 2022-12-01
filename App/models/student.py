@@ -5,7 +5,8 @@ from App.models import User
 class Student(User):
     studentID = db.Column(db.Integer, db.ForeignKey('user.ID'), primary_key=True)
     # student has a list of recommendation objects
-    recomList = db.relationship('Recommendation', backref=db.backref('student', lazy='joined'))
+    requests = db.relationship('Request',backref=db.backref('student',lazy='joined'))
+    recomlist = db.relationship('Recommendation', backref=db.backref('student', lazy='joined'))
     
     def toJSON(self):
         return{

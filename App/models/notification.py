@@ -9,11 +9,11 @@ class Notification(db.Model):
     date = db.Column(db.String, nullable=False)
     
     
-    def __init__(self, requestID, staffID, requestTitle, date):
+    def __init__(self, requestID, staffID, requestTitle):
         self.requestID=requestID
         self.staffID=staffID
         self.requestTitle=requestTitle
-        self.set_date(date)
+        self.set_date()
         
         
     def toJSON(self):
@@ -25,8 +25,8 @@ class Notification(db.Model):
             'date'        : self.date
         
         }
-    def set_date(self, date):
+    def set_date(self):
 	#set current date and time
-	    date_time = datetime.date_time()
+	    date_time = datetime.now()
 	    self.date = date_time.strftime("%d/%m/%Y %H:%M")
         #written by KARISHMA JAMES
