@@ -18,11 +18,11 @@ class User(db.Model):
 
     def toJSON(self):
         return{
-            'id'       : self.id,
+            'id'       : self.ID,
             'email'    : self.email,
             'firstName': self.firstName,
             'lastName' : self.lastName,
-            'userType ': self.userType
+            'userType' : self.userType
         }
 
     def set_password(self, password):

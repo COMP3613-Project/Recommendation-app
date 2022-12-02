@@ -3,8 +3,8 @@ from App.database import db
 from sqlalchemy.exc import IntegrityError
 from App.controllers import get_staff
 
-def create_notification(sentToStaffID,sentFromStudentID,requestBody):
-    newNotif = Notification(sentToStaffID=sentToStaffID,sentFromStudentID=sentFromStudentID, requestBody=requestBody)
+def create_notification(requestID,staffID,requestBody):
+    newNotif = Notification(requestID=requestID,staffID=staffID, requestTitle=requestBody)
     return newNotif
 
 def send_notification(sentFromStudentID, requestBody, sentToStaffID):
@@ -42,21 +42,5 @@ def get_all_notifs_json():
 def get_user_notif(staffID, notifID):
     return Notification.query.filter_by(sentToStaffID=staffID, notifID=notifID).first()
 
-def change_status(notif, status):
-    if notif:
-        notif.status = status
-    return notif
 
-# approve notif
-def approve_notif(staffID, notifID, status):
-    notif = get_user_notif(staffID, notifID)
-    notif = change_status(notif, status)
-    if notif:
-        try:
-            db.session.add(notif)
-            db.session.commit()
-        except IntegrityError:
-            db.session.rollback()
-            return None
-    return notif
     

@@ -4,7 +4,7 @@ from sqlalchemy.exc import IntegrityError
 from flask import Response
 
 # Create new User
-def create_user(email, password, userType, firstName, lastName):
+def create_user(email, firstName, lastName, userType, password):
     if (userType=="student"):
         newuser = Student(email=email, password=password, userType=userType, firstName=firstName, lastName=lastName)
     else:
@@ -13,7 +13,7 @@ def create_user(email, password, userType, firstName, lastName):
     return newuser
 
 # SIGNUP
-def user_signup(firstName, lastName, email, password, userType):
+def user_signup(email, firstName, lastName, userType, password ):
     newuser = create_user(email=email,
         password=password,
         userType=userType,

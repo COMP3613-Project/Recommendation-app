@@ -2,8 +2,8 @@ from App.models import Recommendation, Student
 from App.database import db
 from sqlalchemy.exc import IntegrityError
 
-def create_recommendation(sentFromStaffID, sentToStudentID, recURL):
-    newrec = Recommendation(sentFromStaffID=sentFromStaffID, sentToStudentID=sentToStudentID, recURL=recURL)
+def create_recommendation(staffID, studentID, recomText):
+    newrec = Recommendation(staffID=staffID, studentID=studentID, recomText=recomText)
     return newrec
 
 def send_recommendation(sentFromStaffID, sentToStudentID, recURL):
