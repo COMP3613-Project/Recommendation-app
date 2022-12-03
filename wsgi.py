@@ -19,7 +19,10 @@ migrate = get_migrate(app)
 @app.cli.command("init", help="Creates and initializes the database")
 def initialize():
     create_db(app)
-    print('database intialized')
+    
+    newstudent = Student("rob@mail.com", "Rob", "Singh", "student", "pass")
+
+    print('database intialized but not working ig')
 
 '''
 User Commands
@@ -34,12 +37,12 @@ user_cli = AppGroup('user', help='User object commands')
 # Then define the command and any parameters and annotate it with the group (@)
 @user_cli.command("create", help="Creates a user")
 @click.argument("email", default="rob@mail.com")
-@click.argument("password", default="robpass")
-@click.argument("userType", default="student")
 @click.argument("firstName", default="Rob")
 @click.argument("lastName", default="Jones")
-def create_user_command(email, password, userType, firstName, lastName):
-    create_user(email, password, userType, firstName, lastName)
+@click.argument("userType", default="student")
+@click.argument("password", default="robpass")
+def create_user_command(email, firstName, lastName, userType, password):
+    create_user(email, firstName, lastName, userType, password)
     print(f'{firstName} {lastName} created!')
 
 # this command will be : flask user create bob bobpass
