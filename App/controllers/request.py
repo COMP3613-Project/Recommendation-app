@@ -3,17 +3,17 @@ from App.database import db
 from sqlalchemy.exc import IntegrityError
 from App.controllers import send_notification, get_staff, get_student
 
-def create_request(staffID, studentID, requestText):
-    newrequest = Request(staffID=staffID, studentID=studentID, requestText=requestText)
+def create_request(staffID, title, studentID, requestText):
+    newrequest = Request(staffID=staffID, title = title, studentID=studentID, requestText=requestText)
     return newrequest
 
-def send_request(staffID, studentID, requestText):
+def send_request(staffID, title, studentID, requestText):
     staff = get_staff(staffID)
     stud = get_student(studentID)
     
     if(staff):
         if(stud):
-            newrequest = create_request(staffID, studentID, requestText)
+            newrequest = create_request(staffID, title, studentID, requestText)
             try:
                 db.session.add(newrequest)
                 db.session.commit()
@@ -21,7 +21,7 @@ def send_request(staffID, studentID, requestText):
                 db.session.rollback()
                 return None
 
-            send_notification(staffID,studentID,requestText)
+            send_notification(staffID,studentID,title)
     
 def get_request(reuestID):
     return request.query.get(requestID)

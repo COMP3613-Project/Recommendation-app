@@ -3,12 +3,15 @@ from flask_login import UserMixin
 from App.database import db
 
 class User(db.Model, UserMixin):
-    ID = db.Column(db.Integer, primary_key=True)
+    ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
     email =  db.Column(db.String, unique=True,nullable=False)
     firstName = db.Column(db.String, nullable=False)
     lastName = db.Column(db.String, nullable=False)
     userType = db.Column(db.String, nullable=False)
     password = db.Column(db.String(120), nullable=False)
+
+    student = db.relationship('Student',backref=db.backref('user',lazy='joined'))
+    staff = db.relationship('Staff',backref=db.backref('user',lazy='joined'))
 
     def __init__(self, email, firstName, lastName,userType, password):
         self.email = email

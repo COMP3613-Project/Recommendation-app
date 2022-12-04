@@ -2,8 +2,8 @@ from App.models import Staff
 from App.database import db
 from flask import jsonify
 
-def get_staff(id):
-    staff=Staff.query.get(id)
+def get_staff(staffID):
+    staff=Staff.query.get(staffID)
     if staff:
         return staff
     return None
@@ -40,11 +40,11 @@ def get_staff_by_lastName(lastName):
     return jsonify(staff)
 
 def get_staff_by_name(firstName, lastName):
-    staff=Staff.query.filter_by(firstName=firstName, lastName=lastName).all()
-    staff = [staf.toJSON() for staf in staff]
-    if staff == []:
+    staff=Staff.query.filter_by(firstName=firstName, lastName=lastName).first()
+    if staff:
+        return staff
+    else:
         return None
-    return jsonify(staff)
 
 def search_staff(type, keyword):
     if (type=="ID"):
