@@ -1,4 +1,4 @@
-from flask import Blueprint, redirect, render_template, request, send_from_directory, flash, Response
+from flask import Blueprint, redirect, render_template, request, send_from_directory, flash, Response, url_for
 from App.forms import Login, SignUp, Request
 from App.models import User, Staff, Student
 from flask_jwt import JWT
@@ -21,15 +21,22 @@ from App.controllers import (
     create_recommendation,
     get_all_recommendations_json,
     create_request,
+    get_request,
     get_all_requests,
+    get_student_requests,
     send_request,
-    get_staff_by_name
+    get_staff_by_name,
+    get_student_recommendations,
+    get_staff,
+    get_recommendation,
+    get_student,
+    logout_user
 )
 
 index_views = Blueprint('index_views', __name__, template_folder='../templates')
 
 @index_views.route('/', methods=['GET'])
-def index_page():
+def login():
     form = Login()
     return render_template('login.html', form=form)
 
@@ -43,9 +50,13 @@ def loginAction():
       if user:
         login_user(user, False) # login the user
         if user.userType == "student" :
-          return render_template('StudentHome.html',firstName=user.firstName)
+          requests = get_student_requests(current_user.id)
+          recoms = get_student_recommendations(current_user.id)
+          return render_template('StudentHome.html',firstName=user.firstName, requests = requests, recoms = recoms)
         else:
-          return render_template('users.html')
+          staff = get_staff(current_user.id)
+          notifications = staff.notificationFeed
+          return render_template('staffHome.html',notifications = notifications, staffID = staff.id)
   else : 
     return Response(form.errors)
   #flash('Invalid credentials')
@@ -69,13 +80,40 @@ def submitrequest():
     staffname = data['staffName'].split()
     staff = get_staff_by_name(staffname[0],staffname[1])
     if staff:
-      name = staff.firstName
-      
-      student=Student.query.filter_by(studentID=current_user.ID).first()
-      return Response(student.studentID)
-      send_request(staff.staffID,data['title'],student.studentID,data['text'])
+      student=Student.query.filter_by(id=current_user.id).first()
+      send_request(staff.id,data['title'],student.id,data['text'])
+      requests = get_student_requests(student.id)
+      recoms = get_student_recommendations(current_user.id)
+      return render_template('StudentHome.html',firstName=student.firstName, requests=requests, recoms = recoms) 
     else :
       return Response("WE NOT INNIT")
   else:
     return Response(form.errors)
+
+@index_views.route("/request/<requestID>/view", methods=['GET'])
+def view_student_request(requestID):
+    print(requestID)
+    request = get_request(requestID)
+    return render_template('viewRequest.html',request=request)
+
+@index_views.route('/recommendation/<recomID>/view', methods = ['GET'])
+def viewrecom(recomID):
+    student = get_student(current_user.id)
+    recoms = get_student_recommendations(current_user.id)
+    recom = get_recommendation(current_user.id,recomID)
+    requests = get_student_requests(current_user.id)
+    if recom:
+      return render_template('viewRecommendation.html', recom = recom)
+    else:
+      return render_template('StudentHome.html',firstName=student.firstName, requests=requests, recoms = recoms) 
+
+@index_views.route('/logout', methods = ['GET'])
+def logout():
+    #user = get_user(current_user.id)
+    logout_user()
+    return redirect(url_for('index_views.login'))
+
+
+
+
   

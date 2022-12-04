@@ -9,7 +9,7 @@ from App.controllers import (
     get_student_reclist_json
 )
 
-student_views = Blueprint('student_views', __name__, template_folder='../templates')
+student_views = Blueprint('student_views', __name__, template_folder='../templates')    
 
 # SEARCH STAFF
 @student_views.route('/search', methods=['GET'])

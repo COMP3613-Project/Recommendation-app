@@ -18,6 +18,7 @@ from App.controllers import (
     create_recommendation,
     get_all_recommendations_json,
     create_request,
+    user_signup,
     get_all_requests
 )
 
@@ -33,9 +34,11 @@ class UserUnitTests(unittest.TestCase):
 
     # test_new_student()
     def test_new_student(self):
-        newstudent = Student("rob@mail.com", "Rob", "Singh", "student", "pass")
+        newstudent = User("rob@mail.com", "Rob", "Singh", "student", "pass")
+        print(newstudent.toJSON())
         assert newstudent.firstName == "Rob", newstudent.lastName == "Singh"
         assert newstudent.email == "rob@mail.com", newstudent.userType=="student"
+        assert newstudent.id ==1
 
     # test_new_staff()
     def test_new_staff(self):
@@ -48,13 +51,13 @@ class UserUnitTests(unittest.TestCase):
     def test_student_toJSON(self):
         student = Student("rob@mail.com", "Rob", "Singh", "student", "pass")
         student_json = student.toJSON()
-        self.assertDictEqual(student_json, {"studentID":None, "email":"rob@mail.com", "userType":"student", "firstName":"Rob","lastName":"Singh"})
+        self.assertDictEqual(student_json, {"id":None, "email":"rob@mail.com", "userType":"student", "firstName":"Rob","lastName":"Singh"})
 
     # test_staff_toJSON()
     def test_staff_toJSON(self):
         staff = Staff("bob@mail.com", "Bob", "Jones", "staff", "pass")
         staff_json = staff.toJSON()
-        self.assertDictEqual(staff_json, {"staffID":None, "email":"bob@mail.com", "userType":"staff", "firstName":"Bob","lastName":"Jones"})
+        self.assertDictEqual(staff_json, {"id":None, "email":"bob@mail.com", "userType":"staff", "firstName":"Bob","lastName":"Jones"})
 
     # test_hashed_password()
     def test_hashed_password(self):
@@ -86,7 +89,7 @@ class UserUnitTests(unittest.TestCase):
     #test_new_request()
     def test_new_request(self):
         newrequest = Request("1", "Bob request","1", "Please send a recommendation to me")
-        assert newrequest.studentID == "1", newrequest.staffID == "1" 
+        assert newrequest.staffID == "1", newrequest.studentID == "1" 
         assert newrequest.requestText== "Please send a recommendation to me"
 
     #test_request_toJSON()
@@ -100,7 +103,7 @@ class UserUnitTests(unittest.TestCase):
     #test_new_notification()
     def test_new_notification(self):
         newnotif = Notification("1", "1", "Bob request")
-        assert newnotif.requestID=="1", newnotif.staffID =="1"
+        assert newnotif.requestID=="1", newnotif.id =="1"
         assert newnotif.requestTitle =="Bob request"
 
     #test_notif_toJSON()
@@ -141,6 +144,7 @@ class UsersIntegrationTests(unittest.TestCase):
     def test_create_user(self):
         user = create_user("rob@mail.com", "Rob", "Singh", "student", "pass")
         assert user.email == "rob@mail.com", user.firstName == "Rob"
+        assert user.id == 1
 
     # test_get_all_users_json()
     def test_get_all_users_json(self):
@@ -172,8 +176,8 @@ class UsersIntegrationTests(unittest.TestCase):
             
         students_json = get_all_students_json()
         
-        self.assertListEqual([{"studentID":2, "email":"rob@mail.com",  "firstName":"Rob", "lastName":"Singh", "userType":"student"},
-                              {"studentID":3, "email":"chloe@mail.com", "firstName":"Chloe", "lastName":"Smith","userType":"student"}],
+        self.assertListEqual([{"id":2, "email":"rob@mail.com",  "firstName":"Rob", "lastName":"Singh", "userType":"student"},
+                              {"id":3, "email":"chloe@mail.com", "firstName":"Chloe", "lastName":"Smith","userType":"student"}],
                              students_json)
         db.session.remove()
 
@@ -192,8 +196,8 @@ class UsersIntegrationTests(unittest.TestCase):
             
         staff_json = get_all_staff_json()
         
-        self.assertListEqual([{"staffID":1, "email":"bob@mail.com", "firstName":"Bob", "lastName":"Jones", "userType":"staff"},
-                              {"staffID":3, "email":"j@mail.com", "firstName":"John", "lastName":"Smith", "userType":"staff"}],
+        self.assertListEqual([{"id":1, "email":"bob@mail.com", "firstName":"Bob", "lastName":"Jones", "userType":"staff"},
+                              {"id":3, "email":"j@mail.com", "firstName":"John", "lastName":"Smith", "userType":"staff"}],
                              staff_json)
         db.session.remove()
 
@@ -214,7 +218,7 @@ class UsersIntegrationTests(unittest.TestCase):
         
         db.session.remove()
         
-        self.assertDictEqual({"staffID":1, "email":"bob@mail.com", "firstName":"Bob", "lastName":"Jones", "userType":"staff"},
+        self.assertDictEqual({"id":1, "email":"bob@mail.com", "firstName":"Bob", "lastName":"Jones", "userType":"staff"},
                              staff)
     
     # test_create_request
@@ -222,9 +226,9 @@ class UsersIntegrationTests(unittest.TestCase):
         staff = create_user("bob@mail.com", "Bob", "Jones", "staff", "pass")
         student = create_user("rob@mail.com", "Rob", "Singh", "student", "pass")
 
-        request = create_request(staff.staffID,"Bob request",student.studentID,"I need a recommendation")
+        request = create_request(staff.id,"Bob request",student.id,"I need a recommendation")
 
-        assert request.staffID == staff.staffID
+        assert request.staffID == staff.id
 
     # test_get_request
     def test_get_request(self):
@@ -237,7 +241,7 @@ class UsersIntegrationTests(unittest.TestCase):
         except:
             db.session.rollback
         
-        request = create_request(staff.staffID,"Bob request",student.studentID,"I need a recommendation")
+        request = create_request(staff.id,"Bob request",student.id,"I need a recommendation")
         current_time = datetime.now()
         test_time = current_time.strftime("%d/%m/%Y %H:%M")
        
@@ -260,12 +264,12 @@ class UsersIntegrationTests(unittest.TestCase):
         except:
             db.session.rollback
         
-        request = create_request(staff.staffID,"Bob request",student.studentID,"I need a recommendation")
+        request = create_request(staff.id,"Bob request",student.id,"I need a recommendation")
         current_time = datetime.now()
         test_time = current_time.strftime("%d/%m/%Y %H:%M")
         db.session.add(request)
         
-        request = create_request(staff.staffID,"Bob request",student.studentID,"Please write me a recommendation")
+        request = create_request(staff.id,"Bob request",student.id,"Please write me a recommendation")
         current_time = datetime.now()
         test_time = current_time.strftime("%d/%m/%Y %H:%M")
         db.session.add(request)
@@ -290,8 +294,8 @@ class UsersIntegrationTests(unittest.TestCase):
         except:
             db.session.rollback
         
-        request = create_request(staff.staffID,"Bob request",student.studentID,"I need a recommendation")
-        notif = create_notification(request.requestID, student.studentID, "Bob request")
+        request = create_request(staff.id,"Bob request",student.id,"I need a recommendation")
+        notif = create_notification(request.requestID, student.id, "Bob request")
         
         staff.notificationFeed.append(notif)
         db.session.remove()
@@ -309,8 +313,8 @@ class UsersIntegrationTests(unittest.TestCase):
         except:
             db.session.rollback
         
-        request = create_request(staff.staffID,"Bob request",student.studentID,"I need a recommendation")
-        notif = create_notification(request.requestID, student.studentID, request.title)
+        request = create_request(staff.id,"Bob request",student.id,"I need a recommendation")
+        notif = create_notification(request.requestID, student.id, request.title)
         current_time = datetime.now()
         test_time = current_time.strftime("%d/%m/%Y %H:%M")
         
@@ -333,15 +337,15 @@ class UsersIntegrationTests(unittest.TestCase):
         except:
             db.session.rollback
         
-        request = create_request(staff.staffID,"Bob request",student.studentID,"I need a recommendation")
-        notif = create_notification(request.requestID, student.studentID, request.title)
+        request = create_request(staff.id,"Bob request",student.id,"I need a recommendation")
+        notif = create_notification(request.requestID, student.id, request.title)
         current_time = datetime.now()
         test_time = current_time.strftime("%d/%m/%Y %H:%M")
         db.session.add(notif)
         staff.notificationFeed.append(notif)
         
-        request = create_request(staff.staffID,"Bob request",student.studentID,"Please write me a recommendation")
-        notif = create_notification(request.requestID, student.studentID, request.title)
+        request = create_request(staff.id,"Bob request",student.id,"Please write me a recommendation")
+        notif = create_notification(request.requestID, student.id, request.title)
         current_time = datetime.now()
         test_time = current_time.strftime("%d/%m/%Y %H:%M")
         db.session.add(notif)
@@ -351,8 +355,8 @@ class UsersIntegrationTests(unittest.TestCase):
         
         db.session.remove()
         
-        self.assertListEqual([{"notifID":1, "requestID": None,  "staffID":staff.staffID, "requestTitle":"Bob request","date":test_time},
-                              {"notifID":2, "requestID": None,  "staffID":staff.staffID, "requestTitle":"Bob request","date":test_time}],
+        self.assertListEqual([{"notifID":1, "requestID": None,  "staffID":staff.id, "requestTitle":"Bob request","date":test_time},
+                              {"notifID":2, "requestID": None,  "staffID":staff.id, "requestTitle":"Bob request","date":test_time}],
                              notifs_json)
 
     # test_approve_request
@@ -366,10 +370,10 @@ class UsersIntegrationTests(unittest.TestCase):
         except:
             db.session.rollback
         
-        request = create_request(staff.staffID,"Bob request",student.studentID,"I need a recommendation")
+        request = create_request(staff.id,"Bob request",student.id,"I need a recommendation")
         current_time = datetime.now()
         test_time = current_time.strftime("%d/%m/%Y %H:%M")
-        notif = create_notification(request.requestID, student.studentID, request.title)
+        notif = create_notification(request.requestID, student.id, request.title)
         db.session.add(notif)
         staff.notificationFeed.append(notif)
         
@@ -391,7 +395,7 @@ class UsersIntegrationTests(unittest.TestCase):
         except:
             db.session.rollback
     
-        newrec = create_recommendation(staff.staffID, student.studentID, "I hereby recommend you!")
+        newrec = create_recommendation(staff.id, student.id, "I hereby recommend you!")
         student.recomlist.append(newrec)
         
         db.session.remove()
@@ -399,7 +403,7 @@ class UsersIntegrationTests(unittest.TestCase):
         assert student.recomlist != None
 
     # test_get_recommendation()
-    def test_get_notification(self):
+    def test_get_recommendation(self):
         staff = create_user("bob@mail.com", "Bob", "Jones", "staff", "pass")
         student = create_user("rob@mail.com", "Rob", "Singh", "student", "pass")
         
@@ -409,7 +413,7 @@ class UsersIntegrationTests(unittest.TestCase):
         except:
             db.session.rollback
         
-        newrec = create_recommendation(staff.staffID, student.studentID, "I hereby recommend you!")
+        newrec = create_recommendation(staff.id, student.id, "I hereby recommend you!")
         current_time = datetime.now()
         test_time = current_time.strftime("%d/%m/%Y %H:%M")
         student.recomlist.append(newrec)
@@ -417,7 +421,7 @@ class UsersIntegrationTests(unittest.TestCase):
         
         newrec = Recommendation.query.get(1)
         db.session.remove()
-        self.assertDictEqual({"recomID":1, "staffID":None, "studentID":student.studentID, "recomText":"I hereby recommend you!", "date":test_time},
+        self.assertDictEqual({"recomID":1, "staffID":None, "studentID":student.id, "recomText":"I hereby recommend you!", "date":test_time},
                              newrec.toJSON())
     
     # test_get_all_recommendations_json()
@@ -431,13 +435,13 @@ class UsersIntegrationTests(unittest.TestCase):
         except:
             db.session.rollback
         
-        newrec = create_recommendation(staff.staffID, student.studentID, "I hereby recommend you!")
+        newrec = create_recommendation(staff.id, student.id, "I hereby recommend you!")
         current_time = datetime.now()
         test_time = current_time.strftime("%d/%m/%Y %H:%M")
         student.recomlist.append(newrec)
         db.session.add(newrec)
         
-        newrec = create_recommendation(staff.staffID, student.studentID, "I hereby recommend you also!")
+        newrec = create_recommendation(staff.id, student.id, "I hereby recommend you also!")
         student.recomlist.append(newrec)
         db.session.add(newrec)
         
@@ -445,8 +449,8 @@ class UsersIntegrationTests(unittest.TestCase):
         
         db.session.remove()
         
-        self.assertListEqual([{"recomID":1, "staffID":None, "studentID":student.studentID, "recomText":"I hereby recommend you!", "date":test_time},
-                              {"recomID":2, "staffID":None, "studentID":student.studentID, "recomText":"I hereby recommend you also!", "date":test_time}],
+        self.assertListEqual([{"recomID":1, "staffID":None, "studentID":student.id, "recomText":"I hereby recommend you!", "date":test_time},
+                              {"recomID":2, "staffID":None, "studentID":student.id, "recomText":"I hereby recommend you also!", "date":test_time}],
                              recs_json)
         
         

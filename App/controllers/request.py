@@ -21,13 +21,22 @@ def send_request(staffID, title, studentID, requestText):
                 db.session.rollback()
                 return None
 
-            send_notification(staffID,studentID,title)
+            send_notification(studentID,title,staffID)
     
-def get_request(reuestID):
-    return request.query.get(requestID)
+def get_request(requestID):
+    return Request.query.filter_by(requestID = requestID).first()
+
+def get_student_requests(studentID):
+    return Request.query.filter_by(studentID = studentID).all()
 
 def get_all_requests():
     return Request.query.all()
+
+def get_all_accepted_requests(staffID):
+    return Request.query.filter_by(staffID=staffID, status = "approved").all()
+
+def get_all_rejected_requests(staffID):
+    return Request.query.filter_by(staffID=staffID, status = "rejected").all()
 
 def get_all_requests_json():
     requests = get_all_requests()
@@ -41,7 +50,7 @@ def change_status(request, status):
         request.status = status
     return request
 
-def approve_request(requestID, notifID, status):
+def approve_request(requestID, status):
     request = get_request(requestID)
     request = change_status(request, status)
     if request:

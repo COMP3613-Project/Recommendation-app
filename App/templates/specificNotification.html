@@ -17,33 +17,23 @@
       </header>
       <header class = "navigation">
         <div class= "studentUsername">
-          Hello,{{firstName}}
+          student username
         </div> 
         <div class="functions">
-          <a class="fcc-btn" " href="/create/request">New Request</button>          <button class="logoutButton">Logout</button>    
+          <button class="homeButton">Home</button>        
+          <a class="logoutButton" href = "/">Logout</a>   
         </section>
         
       </header>  
       
     </section>
     <section class="userBody">
-      <div class="requestsDiv">
-        <div class="title">Requesets Made</div>
-        {%for request in requests%}
-        
-          <a class = "request" href = "/request/{{request.requestID}}/view">{{request.title}}</a><br><br>
 
-        {%endfor%}
-      </div> 
-      <div class= "recommendationsDiv">
-        <div class="title">Recommendations</div>
-        {%for recom in recoms%}
-        
-          <a class = "request" href="/recommendation/{{recom.recomID}}/view" >{{recom.recomText}}</a><br><br>
-
-        {%endfor%}
-      </div> 
-      </div>
+      <div class="requestTitle">{{request.title}}</div>
+      <div name="requestText">{{request.requestText}}</duv>
+      <a class="acceptButton" href = "/request/{{request.requestID}}/approve">Accept</a>
+      <a class="rejectButton" href = "/request/{{request.requestID}}/reject">Reject</a>
+      
     </section>
     
   </body>
@@ -87,17 +77,18 @@
     
   }
   
-  .makeRecomendationButton{
+  .homeButton{
     height: 30px;
     width: 200px;
-    left: 30%;
+    left: 20%;
     top: 20%;
-    position: relative;  
+    position: relative; 
   }
+  
   .logoutButton{
     height: 30px;
     width: 200px;
-    left: 40%;
+    left: 30%;
     top: 20%;
     position:relative;
   }
@@ -114,68 +105,56 @@
     height: 150px;
   }
   .userBody{
-    right: 10%;
-    position: absolute;
-    width: 80%;
-    height: 100%;
+    margin: 0 auto;
+    top: 20%;
+    position: relative;
+    width: 70%;
+    height: 450px;
     outline-style: solid;
     background-color: white;
   }
-  .requestsDiv{
-    width:49%;
-    height: 100%;
-    float:left;  
-    position: relative;
-    outline-style:solid;
-  }
 
-  .recommendationsDiv{
-    width:49%;
-    height: 100%;
-    float:right;  
-    position: relative;
-    outline-style:solid;
-  }
-
-  .title{
-    height: 60px;
-    position: relative;
-    outline-style:solid;
+  .requestTitle{
+    top: 1%;
+    left: 10%;
+    width: 80%;
+    height: 50px;
+    outline-style: solid;
+    position:relative;
+    text-align: center;
     font-size: 30px;
+    margin-bottom: 15px;
+  }
+  textarea{
+    left: 12%;
+    position: relative;
+    width: 50%;
+    height: 320px;
+    outline-style:solid;
+  }
+
+  .acceptButton{
+    top:20%;
+    right: 20%;
+    float: right;
+    height: 50px;
+    width: 120px;
+    position: absolute;
+    outline-style:solid;
+    font-size: 20px;
     font-weight: bold;
     text-align:center;
   }
-
-  .request{
-    height: 60px;
-    width: 90%;
-    left:5%;
-    position: relative;
+  .rejectButton{
+    top:20%;
+    right: 5%;
+    float: right;
+    height: 50px;
+    width: 120px;
+    position: absolute;
     outline-style:solid;
-    font-size: 30px;
+    font-size: 20px;
     font-weight: bold;
     text-align:center;
-    margin-top: 20px;
   }
-
-  .recommendation{
-    height: 60px;
-    width: 90%;
-    left:5%;
-    position: relative;
-    outline-style:solid;
-    font-size: 30px;
-    font-weight: bold;
-    text-align:center;
-    margin-top: 20px;
-  }
-
-  .fcc-btn {
-  background-color: #199319;
-  color: white;
-  text-decoration: none;
-}
-.fcc-btn:hover {
-  background-color: #223094;
-}
 </style>

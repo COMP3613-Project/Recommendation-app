@@ -1,12 +1,16 @@
-from App.models import Staff
+from App.models import Staff, User
 from App.database import db
 from flask import jsonify
+from flask_login import  LoginManager, current_user, login_user, login_required
 
 def get_staff(staffID):
-    staff=Staff.query.get(staffID)
+    staff=Staff.query.filter_by(id=staffID).first()
     if staff:
+        print(staff.toJSON())
         return staff
-    return None
+    else:
+        print(staffID)
+        return None
 
 def get_all_staff():
     return Staff.query.all()

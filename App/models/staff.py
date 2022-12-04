@@ -3,7 +3,7 @@ from App.models import User
 
 
 class Staff(User):
-    staffID = db.Column(db.Integer, db.ForeignKey('user.ID'), primary_key=True)
+    id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True, autoincrement=True)
     # staff has a list of notification objects
 
     recommendations = db.relationship('Recommendation',backref=db.backref('staff',lazy='joined'))
@@ -12,7 +12,7 @@ class Staff(User):
     
     def toJSON(self):
         return {
-            'staffID'  : self.staffID,
+            'id'  : self.id,
             'email'    : self.email,
             'firstName': self.firstName,
             'lastName' : self.lastName,
@@ -21,7 +21,7 @@ class Staff(User):
     
     def toJSON_notifs(self):
         return {
-            'staffID'  : self.staffID,
+            'id'  : self.id,
             'email'    : self.email,
             'firstName': self.firstName,
             'lastName' : self.lastName,

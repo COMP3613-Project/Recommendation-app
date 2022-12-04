@@ -17,33 +17,29 @@
       </header>
       <header class = "navigation">
         <div class= "studentUsername">
-          Hello,{{firstName}}
+          student username
         </div> 
         <div class="functions">
-          <a class="fcc-btn" " href="/create/request">New Request</button>          <button class="logoutButton">Logout</button>    
+          <button class="homeButton">Home</button>        
+          <a class="logoutButton" href = "/">Logout</a>   
         </section>
         
       </header>  
       
     </section>
     <section class="userBody">
-      <div class="requestsDiv">
-        <div class="title">Requesets Made</div>
-        {%for request in requests%}
-        
-          <a class = "request" href = "/request/{{request.requestID}}/view">{{request.title}}</a><br><br>
 
-        {%endfor%}
-      </div> 
-      <div class= "recommendationsDiv">
-        <div class="title">Recommendations</div>
-        {%for recom in recoms%}
-        
-          <a class = "request" href="/recommendation/{{recom.recomID}}/view" >{{recom.recomText}}</a><br><br>
-
-        {%endfor%}
-      </div> 
+      <div class="requestTitle">{{request.title}}</div>
+      <div name="requestText">{{request.requestText}}</div>
+      <div class="recomForm">
+        <form method="POST" action="/request/{{request.requestID}}/approve">
+          {{ form.csrf_token }}
+          {{form.recomText}}
+          {{form.submit}}
+        </form>
       </div>
+      
+      
     </section>
     
   </body>
@@ -87,17 +83,18 @@
     
   }
   
-  .makeRecomendationButton{
+  .homeButton{
     height: 30px;
     width: 200px;
-    left: 30%;
+    left: 20%;
     top: 20%;
-    position: relative;  
+    position: relative; 
   }
+  
   .logoutButton{
     height: 30px;
     width: 200px;
-    left: 40%;
+    left: 30%;
     top: 20%;
     position:relative;
   }
@@ -114,68 +111,55 @@
     height: 150px;
   }
   .userBody{
-    right: 10%;
-    position: absolute;
-    width: 80%;
-    height: 100%;
+    margin: 0 auto;
+    top: 20%;
+    position: relative;
+    width: 70%;
+    height: 450px;
     outline-style: solid;
     background-color: white;
   }
-  .requestsDiv{
-    width:49%;
-    height: 100%;
-    float:left;  
-    position: relative;
-    outline-style:solid;
-  }
 
-  .recommendationsDiv{
-    width:49%;
-    height: 100%;
-    float:right;  
-    position: relative;
-    outline-style:solid;
-  }
-
-  .title{
-    height: 60px;
-    position: relative;
-    outline-style:solid;
+  .requestTitle{
+    top: 1%;
+    left: 10%;
+    width: 80%;
+    height: 50px;
+    outline-style: solid;
+    position:relative;
+    text-align: center;
     font-size: 30px;
-    font-weight: bold;
-    text-align:center;
+    margin-bottom: 15px;
   }
-
-  .request{
-    height: 60px;
-    width: 90%;
-    left:5%;
+  textarea{
+    left: 12%;
     position: relative;
+    width: 50%;
+    height: 320px;
     outline-style:solid;
-    font-size: 30px;
-    font-weight: bold;
-    text-align:center;
-    margin-top: 20px;
   }
 
-  .recommendation{
-    height: 60px;
-    width: 90%;
-    left:5%;
+  .recomForm{
+    width: 35%;
+    height: 80%;
+    float: right;    
+  }
+  
+  input[type="text"]{
+    width: 300px;
+    height: 50px;
     position: relative;
+    font-size: 20px;
     outline-style:solid;
-    font-size: 30px;
-    font-weight: bold;
-    text-align:center;
-    margin-top: 20px;
   }
-
-  .fcc-btn {
-  background-color: #199319;
-  color: white;
-  text-decoration: none;
-}
-.fcc-btn:hover {
-  background-color: #223094;
-}
+  
+  input[type="submit"]{
+    left: 30%;
+    position: relative;
+    margin-top: 5%;
+    outline: solid;
+    height: 25px;
+    width: 70px;
+    font-size: 15px;
+  }
 </style>

@@ -3,7 +3,7 @@ from flask_login import UserMixin
 from App.database import db
 
 class User(db.Model, UserMixin):
-    ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     email =  db.Column(db.String, unique=True,nullable=False)
     firstName = db.Column(db.String, nullable=False)
     lastName = db.Column(db.String, nullable=False)
@@ -20,12 +20,9 @@ class User(db.Model, UserMixin):
         self.userType=userType
         self.set_password(password)
 
-    def get_id(self):
-        return (self.ID)
-
     def toJSON(self):
         return{
-            'id'       : self.ID,
+            'id'       : self.id,
             'email'    : self.email,
             'firstName': self.firstName,
             'lastName' : self.lastName,

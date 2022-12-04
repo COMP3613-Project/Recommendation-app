@@ -21,3 +21,7 @@ class Request(FlaskForm):
     title = StringField('Request subject', validators=[InputRequired()],render_kw={"placeholder":"Enter Request subject"})
     text = StringField('Request Text', validators=[InputRequired()],render_kw={"placeholder":"Request Text", "rows":"10", "cols":"30" })
     submit = SubmitField('Submit', render_kw={'class': 'btn waves-effect waves-light white-text'})
+
+class Recommendation(FlaskForm):
+    recomText = StringField('Recommendation Tex',validators=[InputRequired()],render_kw={"placeholder":"Enter recommendation text"})
+    submit = SubmitField('Submit', render_kw={'class': 'btn waves-effect waves-light white-text'})

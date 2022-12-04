@@ -4,7 +4,7 @@ from datetime import datetime
 class Notification(db.Model):
     notifID = db.Column(db.Integer, primary_key=True)
     requestID= db.Column(db.Integer,db.ForeignKey('request.requestID'))
-    staffID = db.Column(db.Integer, db.ForeignKey('staff.staffID'))
+    staffID = db.Column(db.Integer, db.ForeignKey('staff.id'))
     requestTitle = db.Column(db.String, nullable=False)
     date = db.Column(db.String, nullable=False)
     

@@ -9,7 +9,9 @@ from App.controllers import (
     get_staff_by_name,
     get_staff_by_firstName,
     get_staff_by_lastName,
-    get_staff_feed_json
+    get_staff_feed_json,
+    get_all_accepted_requests,
+    get_all_rejected_requests
 )
 
 staff_views = Blueprint('staff_views', __name__, template_folder='../templates')
@@ -49,4 +51,22 @@ def staff_notifs():
     if staff:
         return jsonify(staff)
     return ("No staff users recorded")
+
+@staff_views.route('/staff/<staffID>/requests/accepted', methods=['GET'])
+def viewaccepted(staffID):
+    staff = get_staff(staffID)
+    if staff:
+        requests = get_all_accepted_requests(staffID)
+        return render_template('staffAcceptedRequest.html', requests = requests, tablehead = "Accepted requests")
+    else:
+        return render_template('staffHome.html')
+
+@staff_views.route('/staff/<staffID>/requests/rejected', methods=['GET'])
+def viewrejected(staffID):
+    staff = get_staff(staffID)
+    if staff:
+        requests = get_all_rejected_requests(staffID)
+        return render_template('staffAcceptedRequest.html', requests = requests, tablehead = "Rejected Requests")
+    else:
+        return render_template('staffHome.html')
 

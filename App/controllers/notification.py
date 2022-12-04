@@ -1,4 +1,4 @@
-from App.models import Notification
+from App.models import Notification, Staff, User
 from App.database import db
 from sqlalchemy.exc import IntegrityError
 from App.controllers import get_staff
@@ -10,6 +10,7 @@ def create_notification(requestID,staffID,requestBody):
 def send_notification(sentFromStudentID, requestBody, sentToStaffID):
     # get staff feed - notif list
     staff = get_staff(sentToStaffID)
+
     # new notif
     newNotif = create_notification(sentToStaffID, sentFromStudentID, requestBody)
     try:
@@ -40,7 +41,7 @@ def get_all_notifs_json():
 
 # gets a notification from a user's notif feed
 def get_user_notif(staffID, notifID):
-    return Notification.query.filter_by(sentToStaffID=staffID, notifID=notifID).first()
+    return Notification.query.filter_by(staffID=staffID, notifID=notifID).first()
 
 
     

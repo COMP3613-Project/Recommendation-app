@@ -3,15 +3,17 @@ from App.models import User
 
 
 class Student(User):
-    studentID = db.Column(db.Integer, db.ForeignKey('user.ID'), primary_key=True)
+    id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True, autoincrement=True)
     # student has a list of recommendation objects
     requests = db.relationship('Request',backref=db.backref('student',lazy='joined'))
     recomlist = db.relationship('Recommendation', backref=db.backref('student', lazy='joined'))
 
+    def __init__(self, email, firstName, lastName,userType, password):
+        super(Student, self).__init__(email, firstName, lastName,userType, password)
     
     def toJSON(self):
         return{
-            'studentID': self.studentID,
+            'id': self.id,
             'email'    : self.email,
             'firstName': self.firstName,
             'lastName' : self.lastName,
@@ -21,7 +23,7 @@ class Student(User):
     def toJSON_Recoms(self):
         return{
             
-            'studentID' : self.studentID,
+            'id' : self.id,
             'email'     : self.email,
             'firstName' : self.firstName,
             'lastName'  : self.lastName,

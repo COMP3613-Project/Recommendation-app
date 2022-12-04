@@ -16,34 +16,32 @@
         </div>  
       </header>
       <header class = "navigation">
-        <div class= "studentUsername">
-          Hello,{{firstName}}
+        <div class= "staffUsername">
+          staff username
         </div> 
         <div class="functions">
-          <a class="fcc-btn" " href="/create/request">New Request</button>          <button class="logoutButton">Logout</button>    
+          <a class="logoutButton" href = "/">Logout</a>    
         </section>
         
       </header>  
       
     </section>
+    
     <section class="userBody">
-      <div class="requestsDiv">
-        <div class="title">Requesets Made</div>
-        {%for request in requests%}
+      <div class="notificationsDiv">
+        <div class="notificationTitle">Notifications</div>
+        {%for notification in notifications%}
         
-          <a class = "request" href = "/request/{{request.requestID}}/view">{{request.title}}</a><br><br>
+          <a class = "request" href="/notifications/{{notification.notifID}}" method = "GET">{{notification.requestTitle}}</a><br><br>
 
         {%endfor%}
-      </div> 
-      <div class= "recommendationsDiv">
-        <div class="title">Recommendations</div>
-        {%for recom in recoms%}
-        
-          <a class = "request" href="/recommendation/{{recom.recomID}}/view" >{{recom.recomText}}</a><br><br>
-
-        {%endfor%}
-      </div> 
       </div>
+      <div class="accrejDiv">
+        <a class="acceptedButton" href="/staff/{{staffID}}/requests/accepted">Accepted Requests</a>  
+        <a class="rejectedButton" href="/staff/{{staffID}}/requests/rejected" method ="POST">Rejected Requests</a>
+        
+      </div>
+      
     </section>
     
   </body>
@@ -74,7 +72,7 @@
     background: white;
     position: fixed;  
   }
-  .studentUsername{
+  .staffUsername{
     width: 30%;
     float: left;
     height: 100%;
@@ -87,17 +85,10 @@
     
   }
   
-  .makeRecomendationButton{
-    height: 30px;
-    width: 200px;
-    left: 30%;
-    top: 20%;
-    position: relative;  
-  }
   .logoutButton{
     height: 30px;
     width: 200px;
-    left: 40%;
+    left: 60%;
     top: 20%;
     position:relative;
   }
@@ -117,36 +108,23 @@
     right: 10%;
     position: absolute;
     width: 80%;
-    height: 100%;
+    height: 70%;
     outline-style: solid;
     background-color: white;
   }
-  .requestsDiv{
-    width:49%;
+  
+  .notificationsDiv{
+    width: 50%;
     height: 100%;
-    float:left;  
+    float: left;
     position: relative;
-    outline-style:solid;
+    outline-style: solid;
+    text-align: center;
+    overflow-x:hidden;
+    overflow-y:auto;
   }
-
-  .recommendationsDiv{
-    width:49%;
-    height: 100%;
-    float:right;  
-    position: relative;
-    outline-style:solid;
-  }
-
-  .title{
-    height: 60px;
-    position: relative;
-    outline-style:solid;
-    font-size: 30px;
-    font-weight: bold;
-    text-align:center;
-  }
-
-  .request{
+  
+  .notificationTitle{
     height: 60px;
     width: 90%;
     left:5%;
@@ -158,24 +136,32 @@
     margin-top: 20px;
   }
 
-  .recommendation{
-    height: 60px;
-    width: 90%;
-    left:5%;
-    position: relative;
-    outline-style:solid;
-    font-size: 30px;
-    font-weight: bold;
-    text-align:center;
-    margin-top: 20px;
+  .accrejDiv{
+    width: 50%;
+    height: 100%;
+    float: right;
   }
 
-  .fcc-btn {
-  background-color: #199319;
-  color: white;
-  text-decoration: none;
-}
-.fcc-btn:hover {
-  background-color: #223094;
-}
+  .acceptedButton{
+    top: 30%;
+    left:40%;
+    height: 60px;
+    width: 250px;
+    position: relative;
+    outline-style:solid;
+    font-size: 20px;
+    font-weight: bold;
+    text-align:center;  
+  }
+  .rejectedButton{
+    top:60%;
+    height: 60px;
+    width: 250px;
+    position: fixed;
+    outline-style:solid;
+    font-size: 20px;
+    font-weight: bold;
+    text-align:center;
+  }
+  
 </style>

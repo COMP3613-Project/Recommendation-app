@@ -5,8 +5,8 @@ from datetime import datetime
 class Request(db.Model):
 
 	requestID= db.Column(db.Integer, primary_key= True)
-	studentID= db.Column(db.Integer, db.ForeignKey('student.studentID'))
-	staffID= db.Column(db.String, db.ForeignKey('staff.staffID'))
+	studentID= db.Column(db.Integer, db.ForeignKey('student.id'))
+	staffID= db.Column(db.String, db.ForeignKey('staff.id'))
 	title= db.Column(db.String, nullable= False)
 	requestText= db.Column(db.String, nullable= False)
 	date= db.Column(db.String, nullable= False)
