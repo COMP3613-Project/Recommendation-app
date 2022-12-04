@@ -7,6 +7,7 @@ from werkzeug.utils import secure_filename
 from werkzeug.datastructures import  FileStorage
 from datetime import timedelta
 
+from App.models import User
 
 from App.database import create_db
 
@@ -57,6 +58,11 @@ def loadConfig(app, config):
     for key, value in config.items():
         app.config[key] = config[key]
 
+login_manager = LoginManager() 
+@login_manager.user_loader 
+def load_user(ID): 
+    return User.query.get(ID)
+
 def create_app(config={}):
     app = Flask(__name__, static_url_path='/static')
     CORS(app)
@@ -69,6 +75,7 @@ def create_app(config={}):
     configure_uploads(app, photos)
     add_views(app, views)
     create_db(app)
+    login_manager.init_app(app)
     setup_jwt(app)
     app.app_context().push()
     return app

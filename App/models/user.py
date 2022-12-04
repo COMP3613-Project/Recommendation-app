@@ -1,7 +1,8 @@
 from werkzeug.security import check_password_hash, generate_password_hash
+from flask_login import UserMixin
 from App.database import db
 
-class User(db.Model):
+class User(db.Model, UserMixin):
     ID = db.Column(db.Integer, primary_key=True)
     email =  db.Column(db.String, unique=True,nullable=False)
     firstName = db.Column(db.String, nullable=False)
@@ -15,6 +16,9 @@ class User(db.Model):
         self.lastName=lastName
         self.userType=userType
         self.set_password(password)
+
+    def get_id(self):
+        return (self.ID)
 
     def toJSON(self):
         return{

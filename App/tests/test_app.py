@@ -140,7 +140,7 @@ class UsersIntegrationTests(unittest.TestCase):
     # test_create_user()
     def test_create_user(self):
         user = create_user("rob@mail.com", "Rob", "Singh", "student", "pass")
-        assert user.email == "rob@mail.com"
+        assert user.email == "rob@mail.com", user.firstName == "Rob"
 
     # test_get_all_users_json()
     def test_get_all_users_json(self):

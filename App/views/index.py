@@ -1,5 +1,26 @@
-from flask import Blueprint, redirect, render_template, request, send_from_directory
-from App.forms import Login
+from flask import Blueprint, redirect, render_template, request, send_from_directory, flash, Response
+from App.forms import Login, SignUp
+from App.models import User
+from flask_jwt import JWT
+import flask_login
+
+from App.controllers import (
+    create_user,
+    authenticate,
+    login_user,
+    get_all_users_json,
+    get_all_staff_json,
+    get_all_students_json,
+    get_all_requests_json,
+    search_staff,
+    create_notification,
+    change_status,
+    get_all_notifs_json,
+    create_recommendation,
+    get_all_recommendations_json,
+    create_request,
+    get_all_requests
+)
 
 index_views = Blueprint('index_views', __name__, template_folder='../templates')
 
@@ -11,13 +32,22 @@ def index_page():
 #user submits the login form
 @index_views.route('/login', methods=['POST'])
 def loginAction():
-  form = LogIn()
+  form = Login()
   if form.validate_on_submit(): # respond to form submission
       data = request.form
-      user = User.query.filter_by(email = data['email']).first()
-      if user and user.check_password(data['password']): # check credentials
-        flash('Logged in successfully.') # send message to next page
-        login_user(user) # login the user
-        return render_template('users.html')
-  flash('Invalid credentials')
-  return redirect(url_for('index'))
+      user = authenticate(data['email'],data['password'])
+      if user:
+        login_user(user, False) # login the user
+        if user.userType == "student" :
+          return render_template('StudentHome.html')
+        else:
+          return render_template('users.html')
+  else : 
+    return Response(form.errors)
+  #flash('Invalid credentials')
+  #return render_template('login.html', form = form)
+
+@index_views.route('/signup', methods=['GET'])
+def signup():
+  form = SignUp() # create form object
+  return render_template('signup.html', form=form) # pass form object to template

@@ -1,5 +1,4 @@
 <head>
-  <title>Login Form</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
 </head> 
@@ -12,7 +11,8 @@
       
       <img src="userIcon.jfif" class="icon">
       <h1>Login</h1>      
-      <form>
+      <form  method="POST" action="/login">
+        {{ form.csrf_token }}
         <p>Email</p>
         
         <div class="input-field col s12 m8 offset-m2"> 
@@ -26,11 +26,15 @@
 
         <br>
         {{form.submit}}  
+        <a class="signup" href="/signup">Sign Up</button>
+       
+        <br>
         
         <br>
         <a href="#">Forgot Password</a>
         
       </form>
+      
     </div>
   </body>
 

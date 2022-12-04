@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>replit</title>
+  <!-- <link href="style.css" rel="stylesheet" type="text/css" />--->
+</head>
+
+  <body>
+    <section class= "banner">
+      <header class="name">
+        <div class="webname" >
+          <h1>RecomCenter</h1>
+        </div>  
+      </header>
+      <header class = "navigation">
+        <div class= "studentUsername">
+          student username
+        </div> 
+        <div class="functions">
+          <button class="makeRecomendationButton">Make Recommendation</button>          <button class="logoutButton">Logout</button>    
+        </section>
+        
+      </header>  
+      
+    </section>
+    <section class="userBody">
+      <div class="requestsDiv">
+        <div class="title">Requesets Made</div>
+        <button class="request">Request</button>
+      </div> 
+      <div class= "recommendationsDiv">
+        <div class="title">Recommendations</div>
+        <button class="recommendation">Recommendation</button>
+      </div> 
+      </div>
+    </section>
+    
+  </body>
+  
+</html>
+
+<style>
+  body {
+    /*  height: 100%;
+    width: 100%;*/
+    margin: 0;
+    padding: 0;
+    overflow:hidden;
+    background-color:lightblue;
+  }
+
+  .name{
+    width: 100%;
+    height: 80px;
+    background: lightblue;
+    position: fixed;
+    
+  }
+  .navigation{
+    width: 100%;
+    height: 50px;
+    top:10%;
+    background: white;
+    position: fixed;  
+  }
+  .studentUsername{
+    width: 30%;
+    float: left;
+    height: 100%;
+    text-align: center;
+  }
+  .functions{
+    width: 60%;
+    float: right;
+    height: 100%;
+    
+  }
+  
+  .makeRecomendationButton{
+    height: 30px;
+    width: 200px;
+    left: 30%;
+    top: 20%;
+    position: relative;  
+  }
+  .logoutButton{
+    height: 30px;
+    width: 200px;
+    left: 40%;
+    top: 20%;
+    position:relative;
+  }
+  .webname{
+    width: 90%;
+    margin: 0 auto;
+  }
+
+  h1{
+    position: fixed;
+    font-family: "Lucida Handwriting", cursive;  
+  }
+  .banner{
+    height: 150px;
+  }
+  .userBody{
+    right: 10%;
+    position: absolute;
+    width: 80%;
+    height: 100%;
+    outline-style: solid;
+    background-color: white;
+  }
+  .requestsDiv{
+    width:49%;
+    height: 100%;
+    float:left;  
+    position: relative;
+    outline-style:solid;
+  }
+
+  .recommendationsDiv{
+    width:49%;
+    height: 100%;
+    float:right;  
+    position: relative;
+    outline-style:solid;
+  }
+
+  .title{
+    height: 60px;
+    position: relative;
+    outline-style:solid;
+    font-size: 30px;
+    font-weight: bold;
+    text-align:center;
+  }
+
+  .request{
+    height: 60px;
+    width: 90%;
+    left:5%;
+    position: relative;
+    outline-style:solid;
+    font-size: 30px;
+    font-weight: bold;
+    text-align:center;
+    margin-top: 20px;
+  }
+
+  .recommendation{
+    height: 60px;
+    width: 90%;
+    left:5%;
+    position: relative;
+    outline-style:solid;
+    font-size: 30px;
+    font-weight: bold;
+    text-align:center;
+    margin-top: 20px;
+  }
+</style>
