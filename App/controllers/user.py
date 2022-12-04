@@ -5,12 +5,11 @@ from flask import Response
 
 # Create new User
 def create_user(email, firstName, lastName, userType, password):
-    user = User(email=email, password=password, userType=userType, firstName=firstName, lastName=lastName)
     if (userType=="student"):
-        newuser = Student(studentID = user.ID, email=email, password=password, userType=userType, firstName=firstName, lastName=lastName)
+        newuser = Student( email=email, password=password, userType=userType, firstName=firstName, lastName=lastName)
     else:
         if (userType=="staff"):
-            newuser = Staff(staffID = user.ID, email=email, password=password, userType=userType, firstName=firstName, lastName=lastName)
+            newuser = Staff( email=email, password=password, userType=userType, firstName=firstName, lastName=lastName)
     return newuser
 
 # SIGNUP
