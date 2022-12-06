@@ -16,48 +16,12 @@ from App.controllers import (
 
 staff_views = Blueprint('staff_views', __name__, template_folder='../templates')
 
-
-# VIEW NOTIFICATION FEED
-@staff_views.route('/notifications', methods=['GET'])
-@jwt_required()
-def view_user_feed():
-    staffID = current_identity.id
-    if get_staff(staffID):
-        notifs = get_staff_feed_json(staffID)
-        if notifs:
-            return jsonify(notifs)
-        return Response('no notifications found for this user', status=404)
-    return Response({"students cannot perform this action"}, status=401)
-
-
-# routes for testing purposes
-@staff_views.route('/view/staff', methods=['GET'])
-def get_staff_page():
-    staff = get_all_staff()
-    return render_template('users.html', users=staff)
-
-# JSON view all Staff
-@staff_views.route('/staff', methods=['GET'])
-def staff():
-    staff = get_all_staff_json()
-    if staff:
-        return jsonify(staff)
-    return ("No staff users recorded")
-
-# JSON view all staff + their notification feed
-@staff_views.route('/staff/feeds', methods=['GET'])
-def staff_notifs():
-    staff = get_all_staff_notifs_json()
-    if staff:
-        return jsonify(staff)
-    return ("No staff users recorded")
-
 @staff_views.route('/staff/<staffID>/requests/accepted', methods=['GET'])
 def viewaccepted(staffID):
     staff = get_staff(staffID)
     if staff:
         requests = get_all_accepted_requests(staffID)
-        return render_template('staffAcceptedRequest.html', requests = requests, tablehead = "Accepted requests")
+        return render_template('staffAcceptedRequest.html', requests = requests, tablehead = "Accepted requests", firstName=staff.firstName)
     else:
         return render_template('staffHome.html')
 
@@ -66,7 +30,7 @@ def viewrejected(staffID):
     staff = get_staff(staffID)
     if staff:
         requests = get_all_rejected_requests(staffID)
-        return render_template('staffAcceptedRequest.html', requests = requests, tablehead = "Rejected Requests")
+        return render_template('staffAcceptedRequest.html', requests = requests, tablehead = "Rejected Requests", firstName=staff.firstName)
     else:
         return render_template('staffHome.html')
 

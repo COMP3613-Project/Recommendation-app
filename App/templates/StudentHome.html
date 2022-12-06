@@ -20,7 +20,11 @@
           Hello,{{firstName}}
         </div> 
         <div class="functions">
-          <a class="fcc-btn" " href="/create/request">New Request</button>          <button class="logoutButton">Logout</button>    
+          <div class="requestButtonDiv">
+            <a class="fcc-btn" " href="/create/request">New Request</button>
+          </div>
+                    
+          <a class="logoutButton" href = "/">Logout</a>    
         </section>
         
       </header>  
@@ -30,17 +34,19 @@
       <div class="requestsDiv">
         <div class="title">Requesets Made</div>
         {%for request in requests%}
-        
+        <div class="requestBox">
           <a class = "request" href = "/request/{{request.requestID}}/view">{{request.title}}</a><br><br>
-
+        </div>
         {%endfor%}
+        
+        
       </div> 
       <div class= "recommendationsDiv">
         <div class="title">Recommendations</div>
         {%for recom in recoms%}
-        
-          <a class = "request" href="/recommendation/{{recom.recomID}}/view" >{{recom.recomText}}</a><br><br>
-
+        <div class="recommendationBox">
+          <a class = "recommendation" href="/recommendation/{{recom.recomID}}/view" >{{recom.recomText}}</a><br><br>
+        </div>
         {%endfor%}
       </div> 
       </div>
@@ -94,13 +100,7 @@
     top: 20%;
     position: relative;  
   }
-  .logoutButton{
-    height: 30px;
-    width: 200px;
-    left: 40%;
-    top: 20%;
-    position:relative;
-  }
+  
   .webname{
     width: 90%;
     margin: 0 auto;
@@ -120,6 +120,8 @@
     height: 100%;
     outline-style: solid;
     background-color: white;
+    overflow-x: hidden;
+    overflow-y: auto;
   }
   .requestsDiv{
     width:49%;
@@ -127,6 +129,7 @@
     float:left;  
     position: relative;
     outline-style:solid;
+    
   }
 
   .recommendationsDiv{
@@ -146,36 +149,110 @@
     text-align:center;
   }
 
-  .request{
-    height: 60px;
-    width: 90%;
-    left:5%;
+  .requestBox{
+    /*margin: 0 auto;*/
+    margin-bottom: 10px;
+    top: 5%;
+    left: 5%;
+    width:90%;
     position: relative;
+    height: 35px;
     outline-style:solid;
-    font-size: 30px;
+    border-radius: 10px;
+    padding: 5px;
+    text-align: center;
+  }
+
+  .request{
+    /*height: 60px;
+    width: 100px;
+    left:5%;
+    top: 5%;
+    position: relative;
+    */
+    font-size: 28px;
     font-weight: bold;
     text-align:center;
-    margin-top: 20px;
+    text-decoration: none;
+    color:black;
+    
+  }
+
+  .recommendationBox{
+    margin-bottom: 10px;
+    top: 5%;
+    left: 4%;
+    width:90%;
+    position: relative;
+    height: 35px;
+    outline-style:solid;
+    border-radius: 10px;
+    padding: 5px;
+    text-align: center;
+    
   }
 
   .recommendation{
-    height: 60px;
+   /* height: 60px;
     width: 90%;
     left:5%;
+    top:5%;
     position: relative;
     outline-style:solid;
     font-size: 30px;
     font-weight: bold;
     text-align:center;
-    margin-top: 20px;
+    text-decoration: none;
+    */
+    font-size: 28px;
+    font-weight: bold;
+    text-align:center;
+    text-decoration: none;
+    color:black;
   }
-
+  
+  .requestButtonDiv{
+    margin: 0 auto;
+    width: 30%;
+  }
   .fcc-btn {
-  background-color: #199319;
+  /*background-color: #199319;
   color: white;
-  text-decoration: none;
-}
-.fcc-btn:hover {
-  background-color: #223094;
-}
+  text-decoration: none;*/
+
+    margin: 0 auto;
+    width: 60%;
+    display: block;
+    background: #4B9CD3;
+    text-align: center;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    line-height: 25px;
+    text-decoration: none;
+    
+  }
+  .fcc-btn:hover {
+    background-color: #223094;
+  }
+  .logoutButton{
+    text-align: center;
+    display: block;
+    background: #4B9CD3;
+    color: white;
+    font-weight: bold;
+    line-height: 25px;
+    bottom:50%;
+    height: 25px;
+    width: 150px;
+    left: 80%;
+    position:absolute;
+    border-radius: 5px;
+    text-decoration: none;
+    
+
+  }
+  .logoutButton:hover{
+    background-color: red;
+  }
 </style>

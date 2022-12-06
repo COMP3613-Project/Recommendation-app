@@ -20,8 +20,8 @@ def send_request(staffID, title, studentID, requestText):
             except IntegrityError:
                 db.session.rollback()
                 return None
-
-            send_notification(studentID,title,staffID)
+            print(newrequest.toJSON())
+            send_notification(newrequest.requestID,title,staffID)
     
 def get_request(requestID):
     return Request.query.filter_by(requestID = requestID).first()

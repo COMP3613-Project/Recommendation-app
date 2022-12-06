@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, jsonify, request, send_from_directory, Response
+from flask import Blueprint, render_template, jsonify, request, send_from_directory, Response, redirect, url_for
 from flask_jwt import jwt_required, current_identity
 from flask_login import  LoginManager, current_user, login_user, login_required
 from App.forms import Recommendation
@@ -10,24 +10,12 @@ from App.controllers import (
     get_user_notif,
     send_recommendation,
     get_request,
+    get_notif_by_request,
+    delete_notification,
     approve_request
 )
 
 notification_views = Blueprint('notification_views', __name__, template_folder='../templates')
-
-# SEND REQUEST TO STAFF MEMBER
-@notification_views.route('/request/send', methods=['POST'])
-@jwt_required()
-def sendRequest():
-    if not get_staff(current_identity.id):
-        data = request.get_json()
-        staff = get_staff(data['sentToStaffID'])
-        if not staff:
-            return Response({'staff member not found'}, status=404)
-        send_notification(current_identity.id, data['requestBody'], data['sentToStaffID'])
-        return Response({'request sent successfully'}, status=200)
-    return Response({"staff cannot perform this action"}, status=401)
-
 
 # VIEW NOTIFICATION
 @notification_views.route('/notifications/<notifID>', methods=['GET'])
@@ -64,28 +52,23 @@ def approve_request_action(notifID):
          send_recommendation(studrequest.staffID, studrequest.studentID, data['recomText'])
          approve_request(notifID, "approved")
          staff = get_staff(current_user.id)
-         notifications = staff.notificationFeed
-         return render_template('staffHome.html',notifications = notifications, staffID = staff.id)
+         notif = get_notif_by_request(studrequest.requestID)
+         if notif:
+            delete_notification(notif)
+         return redirect(url_for('index_views.home'))
     else:
         return Response(form.errors)
 
-@notification_views.route('/request/<notifID>/reject', methods=['GET'])
+@notification_views.route('/request/<notifID>/reject', methods=['GET','DELETE'])
 #@jwt_required()
 def reject_request_action(notifID):
     studrequest = get_request(notifID)
     if studrequest:
-        approve_request(notifID, "rejected")
+        approve_request(notifID, "rejected") 
         staff = get_staff(current_user.id)
-        notifications = staff.notificationFeed
-        return render_template('staffHome.html',notifications = notifications, staffID = staff.id)
+        notif = get_notif_by_request(studrequest.requestID)
+        if notif:
+            delete_notification(notif)
+        return redirect(url_for('index_views.home'))
     else:
-        staff = get_staff(current_user.id)
-        notifications = staff.notificationFeed
-        return render_template('staffHome.html',notifications = notifications, staffID = staff.id)
-
-# Routes for testing purposes
-# get all notification objects
-@notification_views.route('/notifs', methods=['GET'])
-def get_all_notifications():
-    notifs = get_all_notifs_json()
-    return jsonify(notifs)
+        return redirect(url_for('index_views.home'))

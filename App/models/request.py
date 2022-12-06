@@ -12,7 +12,7 @@ class Request(db.Model):
 	date= db.Column(db.String, nullable= False)
 	status = db.Column(db.String, nullable = False)
     
-	notification=db.relationship('Notification', backref= db.backref('request',lazy='joined'))
+	notification=db.relationship('Notification', backref= db.backref('request', uselist=False ,lazy='joined'))
 	
 	def __init__(self, staffID, title, studentID, requestText ):
 			self.staffID=staffID

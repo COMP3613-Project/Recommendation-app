@@ -30,7 +30,8 @@ from App.controllers import (
     get_staff,
     get_recommendation,
     get_student,
-    logout_user
+    logout_user,
+    get_user
 )
 
 index_views = Blueprint('index_views', __name__, template_folder='../templates')
@@ -49,14 +50,11 @@ def loginAction():
       user = authenticate(data['email'],data['password'])
       if user:
         login_user(user, False) # login the user
-        if user.userType == "student" :
-          requests = get_student_requests(current_user.id)
-          recoms = get_student_recommendations(current_user.id)
-          return render_template('StudentHome.html',firstName=user.firstName, requests = requests, recoms = recoms)
-        else:
-          staff = get_staff(current_user.id)
-          notifications = staff.notificationFeed
-          return render_template('staffHome.html',notifications = notifications, staffID = staff.id)
+        return redirect(url_for('index_views.home'))
+      else:
+        Response("Invalid login credentials")
+        form = Login()
+        return render_template('login.html', form=form)
   else : 
     return Response(form.errors)
   #flash('Invalid credentials')
@@ -70,7 +68,7 @@ def signup():
 @index_views.route('/create/request', methods = ['GET'])
 def makerequest():
   form = Request()
-  return render_template('makeRequest.html',form = form)
+  return render_template('makeRequest.html',form = form, firstName = current_user.firstName)
 
 @index_views.route('/submit/request', methods = ['POST'])
 def submitrequest():
@@ -80,13 +78,12 @@ def submitrequest():
     staffname = data['staffName'].split()
     staff = get_staff_by_name(staffname[0],staffname[1])
     if staff:
-      student=Student.query.filter_by(id=current_user.id).first()
+      student=get_student(current_user.id)
       send_request(staff.id,data['title'],student.id,data['text'])
-      requests = get_student_requests(student.id)
-      recoms = get_student_recommendations(current_user.id)
-      return render_template('StudentHome.html',firstName=student.firstName, requests=requests, recoms = recoms) 
+      return redirect(url_for('index_views.home'))
     else :
-      return Response("WE NOT INNIT")
+      flash("Staff member does not exist")
+      return redirect(url_for('index_views.makerequest'))
   else:
     return Response(form.errors)
 
@@ -94,24 +91,27 @@ def submitrequest():
 def view_student_request(requestID):
     print(requestID)
     request = get_request(requestID)
-    return render_template('viewRequest.html',request=request)
-
-@index_views.route('/recommendation/<recomID>/view', methods = ['GET'])
-def viewrecom(recomID):
-    student = get_student(current_user.id)
-    recoms = get_student_recommendations(current_user.id)
-    recom = get_recommendation(current_user.id,recomID)
-    requests = get_student_requests(current_user.id)
-    if recom:
-      return render_template('viewRecommendation.html', recom = recom)
-    else:
-      return render_template('StudentHome.html',firstName=student.firstName, requests=requests, recoms = recoms) 
+    return render_template('viewRequest.html',request=request, firstName=current_user.firstName)
 
 @index_views.route('/logout', methods = ['GET'])
 def logout():
-    #user = get_user(current_user.id)
     logout_user()
     return redirect(url_for('index_views.login'))
+
+@index_views.route('/home',methods = ['GET'])
+def home():
+  user = get_user(current_user.id)
+  if user:
+    if user.userType == "student" :
+          requests = get_student_requests(current_user.id)
+          recoms = get_student_recommendations(current_user.id)
+          return render_template('StudentHome.html',firstName=user.firstName, requests = requests, recoms = recoms)
+    else:
+          staff = get_staff(current_user.id)
+          notifications = staff.notificationFeed
+          return render_template('staffHome.html',notifications = notifications, firstName = staff.firstName, staffID = user.id)
+  else:
+    return Response("We not innit")
 
 
 

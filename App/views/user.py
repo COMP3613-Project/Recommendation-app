@@ -32,27 +32,3 @@ def createAccount():
         return render_template('signup.html',form = form2) 
 
 
-
-# Routes for testing purposes
-# check identity of current user
-@user_views.route('/identify', methods=['GET'])
-@jwt_required()
-def identify_user_action():
-    return jsonify({'message': f"id : {current_identity.id}, email: {current_identity.email}, userType: {current_identity.userType}"})
-
-# View all Users
-@user_views.route('/view/users', methods=['GET'])
-def get_user_page():
-    users = get_all_users()
-    return render_template('users.html', users=users)
-
-# JSON View all Users
-@user_views.route('/users')
-def client_app():
-    users = get_all_users_json()
-    return jsonify(users)
-
-# STATIC View all Users
-@user_views.route('/static/users', methods=['GET'])
-def static_user_page():
-  return send_from_directory('static', 'static-user.html')

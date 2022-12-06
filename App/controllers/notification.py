@@ -7,12 +7,12 @@ def create_notification(requestID,staffID,requestBody):
     newNotif = Notification(requestID=requestID,staffID=staffID, requestTitle=requestBody)
     return newNotif
 
-def send_notification(sentFromStudentID, requestBody, sentToStaffID):
+def send_notification(requestID, requestBody, sentToStaffID):
     # get staff feed - notif list
     staff = get_staff(sentToStaffID)
 
     # new notif
-    newNotif = create_notification(sentToStaffID, sentFromStudentID, requestBody)
+    newNotif = create_notification(requestID, sentToStaffID, requestBody)
     try:
         db.session.add(newNotif)
         db.session.commit()
@@ -38,6 +38,14 @@ def get_all_notifs_json():
         return None
     notifs = [notif.toJSON() for notif in notifs]
     return notifs
+
+def get_notif_by_request(requestID):
+    return Notification.query.filter_by(requestID=requestID).first()
+
+def delete_notification(notification):
+    db.session.delete(notification) # delete the object
+    db.session.commit()
+    return notification.notifID
 
 # gets a notification from a user's notif feed
 def get_user_notif(staffID, notifID):

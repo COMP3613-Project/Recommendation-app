@@ -4,7 +4,6 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  <title>replit</title>
   <!-- <link href="style.css" rel="stylesheet" type="text/css" />--->
 </head>
 
@@ -17,7 +16,7 @@
       </header>
       <header class = "navigation">
         <div class= "staffUsername">
-          staff username
+          Hello, {{firstName}}
         </div> 
         <div class="functions">
           <a class="logoutButton" href = "/">Logout</a>    
@@ -31,8 +30,9 @@
       <div class="notificationsDiv">
         <div class="notificationTitle">Notifications</div>
         {%for notification in notifications%}
-        
-          <a class = "request" href="/notifications/{{notification.notifID}}" method = "GET">{{notification.requestTitle}}</a><br><br>
+          <div class="notificationBox">
+            <a class = "request" href="/notifications/{{notification.notifID}}" method = "GET">{{notification.requestTitle}}</a>
+          </div>
 
         {%endfor%}
       </div>
@@ -86,11 +86,19 @@
   }
   
   .logoutButton{
-    height: 30px;
-    width: 200px;
-    left: 60%;
-    top: 20%;
-    position:relative;
+    text-align: center;
+    display: block;
+    background: #4B9CD3;
+    color: white;
+    font-weight: bold;
+    line-height: 25px;
+    bottom:50%;
+    height: 25px;
+    width: 150px;
+    left: 80%;
+    position:absolute;
+    border-radius: 5px;
+    text-decoration: none;
   }
   .webname{
     width: 90%;
@@ -136,32 +144,60 @@
     margin-top: 20px;
   }
 
+  .notificationBox{
+    margin-bottom: 10px;
+    top: 5%;
+    left: 5%;
+    width:90%;
+    position: relative;
+    height: 35px;
+    outline-style:solid;
+    border-radius: 10px;
+    padding: 5px;
+    text-align: center;
+  }
+
+  .request{
+    font-size: 24px;
+    text-align:center;
+    text-decoration: none;
+    color:black;
+
+  }
+
   .accrejDiv{
     width: 50%;
     height: 100%;
     float: right;
+    text-align: center;
   }
 
   .acceptedButton{
-    top: 30%;
-    left:40%;
+    top: 20%;
     height: 60px;
     width: 250px;
-    position: relative;
+    position: absolute;
     outline-style:solid;
     font-size: 20px;
     font-weight: bold;
     text-align:center;  
+    text-decoration: none;
+    line-height: 50px;
+    color:black;
   }
+
   .rejectedButton{
-    top:60%;
+    top: 40%;
     height: 60px;
     width: 250px;
-    position: fixed;
+    position: absolute;
     outline-style:solid;
     font-size: 20px;
     font-weight: bold;
     text-align:center;
+    text-decoration: none;  
+    line-height: 50px;
+    color:black;
   }
   
 </style>
