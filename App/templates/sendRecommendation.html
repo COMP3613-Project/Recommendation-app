@@ -30,7 +30,7 @@
     <section class="userBody">
 
       <div class="requestTitle">{{request.title}}</div>
-      <div name="requestText">{{request.requestText}}</div>
+      <div class="requestText">{{request.requestText}}</div>
       <div class="recomForm">
         <form method="POST" action="/request/{{request.requestID}}/approve">
           {{ form.csrf_token }}
@@ -54,6 +54,14 @@
     padding: 0;
     overflow:hidden;
     background-color:lightblue;
+  }
+
+  .requestText{
+    left: 12%;
+    position: absolute;
+    width: 50%;
+    height: 200px;
+    outline-style:solid;
   }
 
   .name{
@@ -167,7 +175,7 @@
   }
   
   input[type="submit"]{
-    left: 30%;
+    
     position: relative;
     margin-top: 5%;
     outline: solid;
