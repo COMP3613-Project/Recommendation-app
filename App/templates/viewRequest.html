@@ -20,9 +20,8 @@
           Hello,{{firstName}}
         </div> 
         <div class="functions">
-          <a class="homeButton" href = "/home">Home</a>
-          <button class="makeRecomendationButton">Make Recommendation</button>         
-          <a class="logoutButton" href = "/">Logout</a> 
+          <a class="homeButton" href = "/home">Home</a>     
+          <a class="logoutButton" href = "/logout">Logout</a> 
         </section>
         
       </header>  
@@ -81,11 +80,16 @@
   }
   
   .homeButton{
-    height: 30px;
-    width: 200px;
-    left: 20%;
-    top: 20%;
-    position: relative; 
+    margin: 0 auto;
+    width: 20%;
+    display: block;
+    background: #4B9CD3;
+    text-align: center;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    line-height: 25px;
+    text-decoration: none;
   }
   .makeRecomendationButton{
     height: 30px;
@@ -96,11 +100,19 @@
   }
   
   .logoutButton{
-    height: 30px;
-    width: 200px;
-    left: 30%;
-    top: 20%;
-    position:relative;
+    text-align: center;
+    display: block;
+    background: #4B9CD3;
+    color: white;
+    font-weight: bold;
+    line-height: 25px;
+    bottom:50%;
+    height: 25px;
+    width: 150px;
+    left: 80%;
+    position:absolute;
+    border-radius: 5px;
+    text-decoration: none;
   }
   .webname{
     width: 90%;

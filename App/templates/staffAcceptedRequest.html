@@ -21,7 +21,7 @@
         </div> 
         <div class="functions">
           <a class="homeButton" href = "/home">Home</a>        
-          <a class="logoutButton" href = "/">Logout</a>    
+          <a class="logoutButton" href = "/logout">Logout</a>    
         </section>
         
       </header>  
@@ -30,16 +30,18 @@
     <section class="userBody">
 
       <div class="accTitle">{{tablehead}}</div>
-      {%for request in requests%}
+      
       <div class="cardsContainer">
+        {%for request in requests%}  
         <div class="card">
           <h3>{{request.title}}</h3>
           <p>{{request.requestText}}</p>
           <p>{{request.studentID}}</p>
-          <p>{{request.data}}</p>
+          <p>{{request.date}}</p>
         </div>
+        {%endfor%}
       </div>
-      {%endfor%}
+      
       
     </section>
     
@@ -150,10 +152,8 @@
     margin:0 auto;
     width: 90%;
     height: 80%;
-    background-color: red;
-    overflow-y:hidden;
+    overflow-y:auto;
     overflow-x:auto;
-
     display: grid;  
     max-width:800px;
     grid-template-columns: repeat(3,1fr);
@@ -163,30 +163,26 @@
   
   .card {
     color:blue;
-    width: 100%;
-    height:80%;
-    background-color:blue;
+    width: 220px;
+    height:330px;
+    border-style: solid;
+    border-color: black;
   }
 
   .card h3{
     color: black;
     text-align: center;
+    padding: 5px;
   }
 
   .card p{
     color: black;
     text-align: center;
-    background-color:yellow;
     height: 30px;
   }
   
   .card p:nth-child(2){
     height: 140px;
-    background-color:green;
   }
 
-
-  
-
-  
 </style>

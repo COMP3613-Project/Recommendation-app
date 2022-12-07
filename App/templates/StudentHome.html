@@ -24,7 +24,7 @@
             <a class="fcc-btn" " href="/create/request">New Request</button>
           </div>
                     
-          <a class="logoutButton" href = "/">Logout</a>    
+          <a class="logoutButton" href = "/logout">Logout</a>    
         </section>
         
       </header>  
@@ -45,7 +45,7 @@
         <div class="title">Recommendations</div>
         {%for recom in recoms%}
         <div class="recommendationBox">
-          <a class = "recommendation" href="/recommendation/{{recom.recomID}}/view" >{{recom.recomText}}</a><br><br>
+          <a class = "recommendation" href="/recommendation/{{recom.recomID}}/view" >Recommendation from {{recom.staff.firstName}} {{recom.staff.lastName}}</a><br><br>
         </div>
         {%endfor%}
       </div> 
