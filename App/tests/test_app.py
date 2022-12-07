@@ -38,7 +38,7 @@ class UserUnitTests(unittest.TestCase):
         print(newstudent.toJSON())
         assert newstudent.firstName == "Rob", newstudent.lastName == "Singh"
         assert newstudent.email == "rob@mail.com", newstudent.userType=="student"
-        assert newstudent.id ==1
+
 
     # test_new_staff()
     def test_new_staff(self):
@@ -144,7 +144,6 @@ class UsersIntegrationTests(unittest.TestCase):
     def test_create_user(self):
         user = create_user("rob@mail.com", "Rob", "Singh", "student", "pass")
         assert user.email == "rob@mail.com", user.firstName == "Rob"
-        assert user.id == 1
 
     # test_get_all_users_json()
     def test_get_all_users_json(self):
